@@ -18,14 +18,17 @@
 </template>
 
 <script>
-import global_ from './Global'
 export default {
   name: 'Userinfo',
   data () {
     return {
-      databaseConnect: global_.databaseConnect,
       nickname: 'nickname',
       info: 'My info.'
+    }
+  },
+  computed:{
+    databaseConnect() {
+      return this.$store.state.databaseConnect
     }
   }
 }

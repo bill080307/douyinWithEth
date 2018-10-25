@@ -19,18 +19,18 @@
 import Userinfo from "./components/Userinfo";
 import Comment from "./components/Comment";
 import Videolist from "./components/Videolist";
-import global_ from "./components/Global";
+
 export default {
   name: 'App',
   components: {Videolist, Comment, Userinfo},
   methods:{
     init(){
-      global_.databaseConnect = true
+      this.$store.commit('setDatabaseConnect', true)
+      // this.$store.state.databaseConnect = true;
     }
   },
   created:function () {
     this.init();
-    console.log(this.$store.state.menuVisible)
   }
 }
 </script>

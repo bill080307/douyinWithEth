@@ -21,35 +21,22 @@
 </template>
 
 <script>
-import global_ from './Global'
 export default {
   name: 'Videolist',
   data () {
     return {
-      databaseConnect: global_.databaseConnect,
       title: 'video title',
       time: '1540441233',
       gratuity:'12',
       comment:'32'
     }
   },
+  computed:{
+    databaseConnect() {
+      return this.$store.state.databaseConnect
+    }
+  },
   filters:{
-    formatDate:function (inputTime) {
-      var date = new Date();
-      date.setTime(inputTime * 1000);
-      var y = date.getFullYear();
-      var m = date.getMonth() + 1;
-      m = m < 10 ? ('0' + m) : m;
-      var d = date.getDate();
-      d = d < 10 ? ('0' + d) : d;
-      var h = date.getHours();
-      h = h < 10 ? ('0' + h) : h;
-      var minute = date.getMinutes();
-      var second = date.getSeconds();
-      minute = minute < 10 ? ('0' + minute) : minute;
-      second = second < 10 ? ('0' + second) : second;
-      return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
-    },
   }
 }
 </script>
