@@ -1,23 +1,67 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <div id="video">
+      <router-view/>
+    </div>
+    <div id="videolist">
+      <Videolist></Videolist>
+    </div>
+    <div id="userinfo">
+      <Userinfo></Userinfo>
+    </div>
+    <div id="comment">
+      <Comment></Comment>
+    </div>
   </div>
 </template>
 
 <script>
+import Userinfo from "./components/Userinfo";
+import Comment from "./components/Comment";
+import Videolist from "./components/Videolist";
 export default {
-  name: 'App'
+  name: 'App',
+  components: {Videolist, Comment, Userinfo}
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body,html{
+    padding: 0;
+    margin: 0;
+  }
+  #app {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  #video {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-right: 100px;
+  }
+  #videolist{
+    position: fixed;
+    width: 100%;
+    height: 180px;
+    bottom: 0;
+    right: 0;
+  }
+  #userinfo{
+    position: fixed;
+    width: 230px;
+    height: 120px;
+    top: 0;
+    right: 0;
+  }
+  #comment{
+    position: fixed;
+    width: 230px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    margin-top: 120px;
+  }
+
 </style>
