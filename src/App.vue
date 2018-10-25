@@ -29,7 +29,8 @@ export default {
     }
   },
   created:function () {
-    this.init()
+    this.init();
+    console.log(this.$store.state.menuVisible)
   }
 }
 </script>
