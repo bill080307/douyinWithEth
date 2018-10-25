@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div id="video">
+      {{ $t("message.hello")}}
+      <br>
+      _______________________________________
       <router-view/>
     </div>
     <div id="videolist">

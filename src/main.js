@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import filter from './filter'
 
+// 国际化插件
+import i18n from './lang'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -13,6 +16,7 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  i18n,
+  components: {App},
   template: '<App/>'
 });

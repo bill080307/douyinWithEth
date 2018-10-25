@@ -1,9 +1,11 @@
 <template>
   <div class="welcome">
     language
+    <button @click="handleLanguage('en')">English</button>
+    <button @click="handleLanguage('cn')">简体中文</button>
     <select>
-      <option value="Qm2">English</option>
-      <option value="Qm1">简体中文</option>
+      <option value="Qm2" @click="handleLanguage('en')">English</option>
+      <option value="Qm1" @click="handleLanguage('cn')">简体中文</option>
     </select>
     <div class="content">
       <h1>First Video Share With Blockchain in Earth</h1>
@@ -18,6 +20,11 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods:{
+    handleLanguage(lang){
+      this.$i18n.locale = lang;
     }
   }
 }

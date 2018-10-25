@@ -4,7 +4,10 @@
     <div class="videoinfo">
       <p class="description">{{ description }}</p>
       <span class="fileinfo">{{ fileinfo }}</span>
-      <span><button>gratuity</button><button>lable</button></span>
+      <span>
+        <button>gratuity</button>
+        <button>lable</button>
+      </span>
     </div>
   </div>
 </template>
