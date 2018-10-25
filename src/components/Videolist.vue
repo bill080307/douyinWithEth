@@ -1,5 +1,5 @@
 <template>
-  <div class="videolist">
+  <div class="videolist" v-show="databaseConnect">
     <ul>
       <li v-for="n in 5">
         <router-link to="/">
@@ -21,10 +21,12 @@
 </template>
 
 <script>
+import global_ from './Global'
 export default {
   name: 'Videolist',
   data () {
     return {
+      databaseConnect: global_.databaseConnect,
       title: 'video title',
       time: '1540441233',
       gratuity:'12',

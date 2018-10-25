@@ -19,9 +19,18 @@
 import Userinfo from "./components/Userinfo";
 import Comment from "./components/Comment";
 import Videolist from "./components/Videolist";
+import global_ from "./components/Global";
 export default {
   name: 'App',
-  components: {Videolist, Comment, Userinfo}
+  components: {Videolist, Comment, Userinfo},
+  methods:{
+    init(){
+      global_.databaseConnect = true
+    }
+  },
+  created:function () {
+    this.init()
+  }
 }
 </script>
 
@@ -51,7 +60,7 @@ export default {
   #userinfo{
     position: fixed;
     width: 230px;
-    height: 120px;
+    height: 130px;
     top: 0;
     right: 0;
   }
@@ -61,7 +70,7 @@ export default {
     height: 100%;
     top: 0;
     right: 0;
-    margin-top: 120px;
+    margin-top: 130px;
   }
 
 </style>

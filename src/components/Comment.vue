@@ -1,5 +1,5 @@
 <template>
-  <div class="comment">
+  <div class="comment" v-show="databaseConnect">
     <ul>
       <li v-for="n in 5">
         <div class="user"><router-link to="/">{{ address | addressab }}</router-link></div>
@@ -20,10 +20,12 @@
 </template>
 
 <script>
+import global_ from './Global'
 export default {
   name: 'Comment',
   data () {
     return {
+      databaseConnect: global_.databaseConnect,
       address:'0x1234567890ABCDEF0x12345601234567890ABCDEF',
       pubtime: '1540441233',
       vidoetime: '12377598',

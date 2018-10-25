@@ -1,22 +1,29 @@
 <template>
   <div class="userinfo">
-    <img class="avatar" src="../assets/logo.png" alt="">
-    <p class="nickname">{{ nickname }}</p>
-    <p class="info">{{ info }}</p>
-    <p>
-      <router-link to="/">Welcome</router-link>
-      <router-link to="/video">video</router-link>
-      <router-link to="/setting">Setting</router-link>
-      <router-link to="/upload">Upload</router-link>
-    </p>
+    <div v-show="databaseConnect">
+      <img class="avatar" src="../assets/logo.png" alt="">
+      <p class="nickname">{{ nickname }}</p>
+      <p class="info">{{ info }}</p>
+      <p>
+        <router-link to="/">Welcome</router-link>
+        <router-link to="/video">video</router-link>
+        <router-link to="/setting">Setting</router-link>
+        <router-link to="/upload">Upload</router-link>
+      </p>
+    </div>
+    <div v-show="!databaseConnect">
+      No database connect. Please click <router-link to="/">Welcome</router-link> to connect.
+    </div>
   </div>
 </template>
 
 <script>
+import global_ from './Global'
 export default {
   name: 'Userinfo',
   data () {
     return {
+      databaseConnect: global_.databaseConnect,
       nickname: 'nickname',
       info: 'My info.'
     }
