@@ -1,9 +1,6 @@
 <template>
   <div id="app">
     <div id="video">
-      {{ $t("message.hello")}}
-      <br>
-      _______________________________________
       <router-view/>
     </div>
     <div id="videolist">
@@ -22,14 +19,24 @@
 import Userinfo from "./components/Userinfo";
 import Comment from "./components/Comment";
 import Videolist from "./components/Videolist";
-
 export default {
   name: 'App',
   components: {Videolist, Comment, Userinfo},
   methods:{
     init(){
-      this.$store.commit('setDatabaseConnect', true)
-      // this.$store.state.databaseConnect = true;
+        if((typeof web3 !== 'undefined')&&(typeof window.ipfs !== 'undefined')){
+            this.$store.commit('setDatabaseConnect', true);
+            var Web3 = require('web3');
+            var web3js = new Web3(web3.currentProvider);
+            var video = new web3js.eth.Contract(this.$store.state.videoAbi, this.$store.state.videoAddress);
+            this.$store.commit('setVideo', video);
+            web3.eth.getAccounts((error, result) => {
+                if(result.length>0){
+                    this.$store.commit('setUserAccount', result[0]);
+                    console.log(this.$store.state.userAccount);
+                }
+            })
+        }
     }
   },
   created:function () {

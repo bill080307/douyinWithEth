@@ -25,17 +25,32 @@ export default {
   name: 'Videolist',
   data () {
     return {
+        videoNum:0,
       title: 'video title',
       time: '1540441233',
       gratuity:'12',
       comment:'32'
     }
   },
+    methods:{
+        init(){
+            const video = this.$store.state.video;
+            video.methods.videoNum().call().then((res)=>{
+                this.videoNum = res;
+            });
+        }
+    },
+    created:function () {
+        if(this.$store.state.databaseConnect){
+            this.init();
+        }
+    },
   computed:{
     databaseConnect() {
       return this.$store.state.databaseConnect
     }
   },
+
   filters:{
   }
 }
