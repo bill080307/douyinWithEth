@@ -6,8 +6,11 @@
       <p class="description">{{ description }}</p>
       <span class="fileinfo">{{ fileinfo }}</span>
       <span>
-        <button>gratuity</button>
-        <button>lable</button>
+          <input type="number" v-model="textgratuity"/>finney
+        <button @click="gratuity">gratuity</button>
+        <input type="text" v-model="textlable"/>
+        <button @click="lable">lable</button>
+        <button @click="share">share</button>
       </span>
     </div>
   </div>
@@ -22,12 +25,15 @@ export default {
       description:'description',
       fileinfo: '',
         videofile:'',
+        textgratuity:1,
+        textlable:'',
+        videoid:0,
     }
   },methods:{
         init(){
-            const videoid=this.$route.query.id;
+            this.videoid=this.$route.query.id;
             const video = this.$store.state.video;
-            video.methods.getVideo(videoid).call().then((res)=>{
+            video.methods.getVideo(this.videoid).call().then((res)=>{
                 this.title = res.title;
                 this.description = res.info;
                 const info = JSON.parse(res.videoinfo);
@@ -40,6 +46,23 @@ export default {
             });
         },
         preview(){
+
+        },
+        gratuity(){
+            const video = this.$store.state.video;
+            video.methods.reward(this.videoid).send({
+                from: this.$store.state.userAccount,
+                value:this.textgratuity*1E+15
+            }).then();
+        },
+        lable(){
+            if(this.textlable=='')return;
+            const video = this.$store.state.video;
+            video.methods.makeLable(this.videoid,this.textlable).send({
+                from: this.$store.state.userAccount
+            }).then();
+        },
+        share(){
 
         }
     },
