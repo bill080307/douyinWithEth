@@ -29,28 +29,33 @@ export default {
   },
     methods:{
         init(){
-            const video = this.$store.state.video;
-            video.methods.getUserInfo(this.$store.state.userAccount).call().then((res)=>{
-                if(res.nickname!='')this.nickname = res.nickname;
-                if(res.info!='')this.info = res.profile;
+            if(this.$store.state.databaseConnect&&this.$store.state.userAccount){
+                const video = this.$store.state.video;
+                video.methods.getUserInfo(this.$store.state.userAccount).call().then((res)=>{
+                    if(res.nickname!='')this.nickname = res.nickname;
+                    if(res.info!='')this.info = res.profile;
+                    if(res.avatar!='')this.avatar = res.avatar;
+                    ipfs.files.get(this.avatar, (err, files)=> {
+                        let blob = new Blob([files[0].content]);
+                        this.avatarfile= URL.createObjectURL(blob);
+                    })
+                });
+            }else {
                 ipfs.files.get(this.avatar, (err, files)=> {
                     let blob = new Blob([files[0].content]);
                     this.avatarfile= URL.createObjectURL(blob);
                 })
-            });
+            }
         }
     },
     created:function () {
-      if(this.$store.state.databaseConnect&&this.$store.state.userAccount){
           this.init();
-      }
     },
   computed:{
     databaseConnect() {
       return this.$store.state.databaseConnect
     },
       userAccount() {
-          this.init();
           return this.$store.state.userAccount
       },
   }

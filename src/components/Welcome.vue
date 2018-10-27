@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    import Axios from 'axios'
 export default {
   name: 'Welcome',
   data () {
@@ -47,7 +48,9 @@ export default {
               this.content = files[0].content.toString('utf8')
           })
       }else {
-          //TODO 通过HTTP网关 异步获取内容。
+          Axios.get('/ipfs/'+path).then(()=>{
+
+          })
       }
 
     }

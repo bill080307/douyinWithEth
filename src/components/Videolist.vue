@@ -14,8 +14,8 @@
       </li>
     </ul>
     <div class="button">
-      <button>Previous</button>
-      <button>Next</button>
+      <button @click="previous">Previous</button>
+      <button @click="next">Next</button>
     </div>
   </div>
 </template>
@@ -34,27 +34,45 @@ export default {
             const video = this.$store.state.video;
             video.methods.videoNum().call().then((res)=>{
                 this.videoNum = res;
-                var num = this.videoNum-1;
-                this.list = [];
-                while (num>this.videoNum-5&&num>=0){
-                    var cnum=num;
-                    video.methods.getVideoPreview(num).call().then((res)=>{
-                        ipfs.files.get(res.cover, (err, files)=> {
-                            let blob = new Blob([files[0].content]);
-                            this.list.push({
-                                title:res.title,
-                                cover:URL.createObjectURL(blob),
-                                time:res.timestamp,
-                                gratuity:res.gratuityNum,
-                                comment:res.commentsNum,
-                                videoid:cnum
-                            });
-                        })
-
-                    });
-                    num--;
-                }
+                this.refresh();
             });
+        },
+        refresh(){
+            const video = this.$store.state.video;
+            var num = this.videoNum-1;
+            this.list = [];
+            while (num>this.videoNum-5&&num>=0){
+                var cnum=num;
+                video.methods.getVideoPreview(num).call().then((res)=>{
+                    ipfs.files.get(res.cover, (err, files)=> {
+                        let blob = new Blob([files[0].content]);
+                        this.list.push({
+                            title:res.title,
+                            cover:URL.createObjectURL(blob),
+                            time:res.timestamp,
+                            gratuity:res.gratuityNum,
+                            comment:res.commentsNum,
+                            videoid:cnum
+                        });
+                    })
+
+                });
+                num--;
+            }
+        },
+        previous(){
+            if(this.videoNum-5>0)this.videoNum-=5;
+            console.log(this.videoNum);
+            this.refresh();
+        },
+        next(){
+            const video = this.$store.state.video;
+            video.methods.videoNum().call().then((res)=>{
+                console.log(this.videoNum);
+                if(this.videoNum+5<res)this.videoNum+=5;
+                this.refresh();
+            });
+
         }
     },
     created:function () {
