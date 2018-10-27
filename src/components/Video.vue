@@ -1,7 +1,8 @@
 <template>
   <div class="video">
-    <video src="video.mp4" controls="controls"></video>
+    <video :src="videofile" controls="controls"></video>
     <div class="videoinfo">
+      <h1>{{ title }}</h1>
       <p class="description">{{ description }}</p>
       <span class="fileinfo">{{ fileinfo }}</span>
       <span>
@@ -17,10 +18,43 @@ export default {
   name: 'Video',
   data () {
     return {
+        title:'',
       description:'description',
-      fileinfo: 'time:23min,size:34M,Bitrate:768kbps,videocoding:x264,audiocoding:mp3'
+      fileinfo: '',
+        videofile:'',
     }
-  }
+  },methods:{
+        init(){
+            const videoid=this.$route.query.id;
+            const video = this.$store.state.video;
+            video.methods.getVideo(videoid).call().then((res)=>{
+                this.title = res.title;
+                this.description = res.info;
+                const info = JSON.parse(res.videoinfo);
+                //TODO 视频信息显示
+                ipfs.files.get(res.videofile, (err, files)=> {
+                    let blob = new Blob([files[0].content]);
+                    this.videofile= URL.createObjectURL(blob);
+                })
+                console.log(res);
+            });
+        },
+        preview(){
+
+        }
+    },
+    created:function () {
+        if(this.$store.state.databaseConnect){
+            this.init();
+        }else {
+            this.preview();
+        }
+    },
+    computed:{
+        databaseConnect() {
+            return this.$store.state.databaseConnect
+        },
+    }
 }
 </script>
 

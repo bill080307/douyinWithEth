@@ -56,10 +56,10 @@ export default {
                 })
             }
             var file = document.getElementById('file').files[0];
-            var reader = new FileReader();
-            reader.readAsArrayBuffer(file);
-            reader.onloadend = function(e){
-                const buffer = Buffer.from(reader.result);
+            var reader2 = new FileReader();
+            reader2.readAsArrayBuffer(file);
+            reader2.onloadend = function(e){
+                const buffer = Buffer.from(reader2.result);
                 ipfs.add(buffer).then((response)=>{
                     console.log(response);
                     self_.file = response[0].hash;

@@ -1,14 +1,14 @@
 <template>
   <div class="videolist" v-show="databaseConnect">
     <ul>
-      <li v-for="n in 5">
-        <router-link to="/">
-          <img src="../assets/logo.png" alt="">
-          <p class="title">{{ title }}</p>
+      <li v-for="item in list">
+        <router-link :to="{path:'/video',query:{id:item.videoid}}">
+          <img :src="item.cover">
+          <p class="title">{{ item.title }}</p>
           <p class="info">
-            <span class="time">{{ time | formatDate }}</span>
-            <span class="gratuity">{{ gratuity }}</span>
-            <span class="comment">{{ comment }}</span>
+            <span class="time">{{ item.time | formatDate }}</span>
+            <span class="gratuity">{{ item.gratuity }}</span>
+            <span class="comment">{{ item.comment }}</span>
           </p>
         </router-link>
       </li>
@@ -26,10 +26,7 @@ export default {
   data () {
     return {
         videoNum:0,
-      title: 'video title',
-      time: '1540441233',
-      gratuity:'12',
-      comment:'32'
+        list:[],
     }
   },
     methods:{
@@ -37,6 +34,28 @@ export default {
             const video = this.$store.state.video;
             video.methods.videoNum().call().then((res)=>{
                 this.videoNum = res;
+                var num = this.videoNum-1;
+                this.list = [];
+                while (num>this.videoNum-5&&num>=0){
+                    var cnum=num;
+                    video.methods.getVideoPreview(num).call().then((res)=>{
+                        console.log(res);
+                        ipfs.files.get(res.cover, (err, files)=> {
+                            let blob = new Blob([files[0].content]);
+                            this.list.push({
+                                title:res.title,
+                                cover:URL.createObjectURL(blob),
+                                time:res.timestamp,
+                                gratuity:res.gratuityNum,
+                                comment:res.commentsNum,
+                                videoid:cnum
+                            });
+                        })
+
+                    });
+                    num--;
+                    console.log(this.list);
+                }
             });
         }
     },
