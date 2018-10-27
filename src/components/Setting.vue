@@ -57,29 +57,6 @@ export default {
                             console.log(a);
                 })
             }
-
-            // var reader = new FileReader();
-            // var AllowImgFileSize = 2100000;
-            // var file = document.getElementById('file').files[0];
-            // console.log(file);
-            // var imgUrlBase64;
-            // var self_=this;
-            // if (file) {
-            //     imgUrlBase64 = reader.readAsDataURL(file);
-            //     reader.onload = function (e) {
-            //         console.log(self_.nickname, self_.info);
-            //         console.log(reader.result);
-            //         var a = video.methods.setMyInfo(self_.nickname, self_.info, reader.result)
-            //             .send({ from: this.$store.state.userAccount })
-            //             .on("receipt", function(receipt) {
-            //                 console.log(error);
-            //             }).on("error", function(error) {
-            //                 console.log(error);
-            //             })
-            //         console.log(a);
-            //     }
-            // }
-            // console.log(this.nickname, this.info);
         }
     },
     created:function () {
