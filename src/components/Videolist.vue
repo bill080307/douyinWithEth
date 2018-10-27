@@ -93,7 +93,7 @@ export default {
   }
   .button{
     position: absolute;
-    right: 230px;
+    right: 360px;
     top: 0;
   }
 </style>

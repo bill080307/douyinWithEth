@@ -29,7 +29,7 @@ export default {
             video.methods.getUserInfo(this.$store.state.userAccount).call().then((res)=>{
                 if(res.avatar!='')this.avatar = res.avatar;
                 if(res.nickname!='')this.nickname = res.nickname;
-                if(res.info!='')this.info = res.info;
+                if(res.info!='')this.info = res.profile;
                 ipfs.files.get(this.avatar, (err, files)=> {
                     let blob = new Blob([files[0].content]);
                     this.avatarfile= URL.createObjectURL(blob);
@@ -41,6 +41,7 @@ export default {
             var userAccount = this.$store.state.userAccount;
             var nickname = this.nickname;
             var info = this.info;
+            console.log(info);
             var file = document.getElementById('file').files[0];
             var reader = new FileReader();
             reader.readAsArrayBuffer(file);

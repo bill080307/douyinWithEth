@@ -32,7 +32,7 @@ export default {
             const video = this.$store.state.video;
             video.methods.getUserInfo(this.$store.state.userAccount).call().then((res)=>{
                 if(res.nickname!='')this.nickname = res.nickname;
-                if(res.info!='')this.info = res.info;
+                if(res.info!='')this.info = res.profile;
                 ipfs.files.get(this.avatar, (err, files)=> {
                     let blob = new Blob([files[0].content]);
                     this.avatarfile= URL.createObjectURL(blob);
@@ -50,6 +50,7 @@ export default {
       return this.$store.state.databaseConnect
     },
       userAccount() {
+          this.init();
           return this.$store.state.userAccount
       },
   }

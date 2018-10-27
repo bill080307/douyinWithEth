@@ -35,7 +35,6 @@ export default {
             this.$store.commit('setVideoId', this.videoid);
             const video = this.$store.state.video;
             video.methods.getVideo(this.videoid).call().then((res)=>{
-                console.log(res);
                 this.$store.commit('setCommentsNum', res.commentsNum);
                 this.title = res.title;
                 this.description = res.info;
@@ -56,7 +55,7 @@ export default {
         },
         gratuity(){
             const video = this.$store.state.video;
-            video.methods.reward(this.videoid).send({
+              video.methods.reward(this.videoid).send({
                 from: this.$store.state.userAccount,
                 value:this.textgratuity*1E+15
             }).then();
@@ -89,7 +88,7 @@ export default {
 
 <style scoped>
   .video{
-    padding-right: 230px;
+    padding-right: 360px;
     padding-bottom: 180px;
     overflow: auto;
   }

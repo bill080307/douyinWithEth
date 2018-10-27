@@ -25,11 +25,11 @@ export default {
   methods:{
     init(){
         if((typeof web3 !== 'undefined')&&(typeof window.ipfs !== 'undefined')){
-            this.$store.commit('setDatabaseConnect', true);
             var Web3 = require('web3');
             var web3js = new Web3(web3.currentProvider);
             var video = new web3js.eth.Contract(this.$store.state.videoAbi, this.$store.state.videoAddress);
             this.$store.commit('setVideo', video);
+            this.$store.commit('setDatabaseConnect', true);
             web3.eth.getAccounts((error, result) => {
                 if(result.length>0){
                     this.$store.commit('setUserAccount', result[0]);
@@ -69,14 +69,14 @@ export default {
   }
   #userinfo{
     position: fixed;
-    width: 230px;
+    width: 360px;
     height: 130px;
     top: 0;
     right: 0;
   }
   #comment{
     position: fixed;
-    width: 230px;
+    width: 360px;
     height: 100%;
     top: 0;
     right: 0;

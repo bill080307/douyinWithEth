@@ -13,7 +13,7 @@
       </li>
     </ul>
     <div class="newcomment">
-      <textarea v-model="content"></textarea>
+      <textarea v-model="content"></textarea><br>
       <input type="number" v-model="vidoetime" :max="duration"/>
       <button @click="publish">publish</button>
     </div>
