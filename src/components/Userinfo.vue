@@ -11,70 +11,80 @@
       </p>
     </div>
     <div v-show="!databaseConnect">
-      No database connect. Please click <router-link to="/">Welcome</router-link> to connect.
+      No database connect. Please click
+      <router-link to="/">Welcome</router-link>
+      to connect.
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Userinfo',
-  data () {
-    return {
-      nickname: 'nickname',
-      info: 'My info.',
-        avatar:'QmbApgSEbuX3dQGXornrDNhASxBWEFPgYxGYKzvNxKMhcY',
-        avatarfile:null
-    }
-  },
-    methods:{
-        init(){
-            if(this.$store.state.databaseConnect&&this.$store.state.userAccount){
-                const video = this.$store.state.video;
-                video.methods.getUserInfo(this.$store.state.userAccount).call().then((res)=>{
-                    if(res.nickname!='')this.nickname = res.nickname;
-                    if(res.info!='')this.info = res.profile;
-                    if(res.avatar!='')this.avatar = res.avatar;
-                    ipfs.files.get(this.avatar, (err, files)=> {
-                        let blob = new Blob([files[0].content]);
-                        this.avatarfile= URL.createObjectURL(blob);
-                    })
-                });
-            }else {
-                ipfs.files.get(this.avatar, (err, files)=> {
-                    let blob = new Blob([files[0].content]);
-                    this.avatarfile= URL.createObjectURL(blob);
-                })
-            }
+  export default {
+    name: 'Userinfo',
+    data() {
+      return {
+        nickname: 'nickname',
+        info: 'My info.',
+        avatar: 'QmbApgSEbuX3dQGXornrDNhASxBWEFPgYxGYKzvNxKMhcY',
+        avatarfile: null
+      }
+    },
+    methods: {
+      init() {
+        if (this.$store.state.databaseConnect && this.$store.state.userAccount) {
+          const video = this.$store.state.video;
+          video.methods.getUserInfo(this.$store.state.userAccount).call().then((res) => {
+            if (res.nickname != '') this.nickname = res.nickname;
+            if (res.info != '') this.info = res.profile;
+            if (res.avatar != '') this.avatar = res.avatar;
+            ipfs.files.get(this.avatar, (err, files) => {
+              let blob = new Blob([files[0].content]);
+              this.avatarfile = URL.createObjectURL(blob);
+            })
+          });
+        } else {
+          ipfs.files.get(this.avatar, (err, files) => {
+            let blob = new Blob([files[0].content]);
+            this.avatarfile = URL.createObjectURL(blob);
+          })
         }
+      }
     },
-    created:function () {
-          this.init();
+    created: function () {
+      this.init();
     },
-  computed:{
-    databaseConnect() {
-      return this.$store.state.databaseConnect
-    },
-      userAccount() {
-          return this.$store.state.userAccount
+    computed: {
+      databaseConnect() {
+        return this.$store.state.databaseConnect
       },
+      userAccount() {
+        return this.$store.state.userAccount
+      },
+    },
+    watch: {
+      userAccount() {
+        this.init();
+      }
+    }
   }
-}
 </script>
 
 <style scoped>
-  .userinfo{
+  .userinfo {
   }
-  .avatar{
+
+  .avatar {
     display: inline-block;
-    max-width:60px;
-    max-height:60px;
+    max-width: 60px;
+    max-height: 60px;
     float: left;
   }
-  .nickname{
+
+  .nickname {
     font-weight: bolder;
   }
-  .info{
+
+  .info {
     clear: both;
   }
 </style>

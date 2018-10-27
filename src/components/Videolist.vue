@@ -2,7 +2,7 @@
   <div class="videolist" v-show="databaseConnect">
     <ul>
       <li v-for="item in list">
-        <router-link :to="{path:'/video',query:{id:item.videoid}}">
+        <router-link :to="'/video/'+item.videoid">
           <img :src="item.cover">
           <p class="title">{{ item.title }}</p>
           <p class="info">
@@ -21,95 +21,97 @@
 </template>
 
 <script>
-export default {
-  name: 'Videolist',
-  data () {
-    return {
-        videoNum:0,
-        list:[],
-    }
-  },
-    methods:{
-        init(){
-            const video = this.$store.state.video;
-            video.methods.videoNum().call().then((res)=>{
-                this.videoNum = res;
-                this.refresh();
-            });
-        },
-        refresh(){
-            const video = this.$store.state.video;
-            var num = this.videoNum-1;
-            this.list = [];
-            while (num>this.videoNum-5&&num>=0){
-                var cnum=num;
-                video.methods.getVideoPreview(num).call().then((res)=>{
-                    ipfs.files.get(res.cover, (err, files)=> {
-                        let blob = new Blob([files[0].content]);
-                        this.list.push({
-                            title:res.title,
-                            cover:URL.createObjectURL(blob),
-                            time:res.timestamp,
-                            gratuity:res.gratuityNum,
-                            comment:res.commentsNum,
-                            videoid:cnum
-                        });
-                    })
-
-                });
-                num--;
-            }
-        },
-        previous(){
-            if(this.videoNum-5>0)this.videoNum-=5;
-            console.log(this.videoNum);
-            this.refresh();
-        },
-        next(){
-            const video = this.$store.state.video;
-            video.methods.videoNum().call().then((res)=>{
-                console.log(this.videoNum);
-                if(this.videoNum+5<res)this.videoNum+=5;
-                this.refresh();
-            });
-
-        }
+  export default {
+    name: 'Videolist',
+    data() {
+      return {
+        videoNum: 0,
+        list: [],
+      }
     },
-    created:function () {
-        if(this.$store.state.databaseConnect){
-            this.init();
+    methods: {
+      init() {
+        const video = this.$store.state.video;
+        video.methods.videoNum().call().then((res) => {
+          this.videoNum = res;
+          this.refresh();
+        });
+      },
+      refresh() {
+        const video = this.$store.state.video;
+        var num = this.videoNum - 1;
+        this.list = [];
+        while (num > this.videoNum - 5 && num >= 0) {
+          var cnum = num;
+          video.methods.getVideoPreview(num).call().then((res) => {
+            ipfs.files.get(res.cover, (err, files) => {
+              let blob = new Blob([files[0].content]);
+              this.list.push({
+                title: res.title,
+                cover: URL.createObjectURL(blob),
+                time: res.timestamp,
+                gratuity: res.gratuityNum,
+                comment: res.commentsNum,
+                videoid: cnum
+              });
+            })
+          });
+          num--;
         }
-    },
-  computed:{
-    databaseConnect() {
-      return this.$store.state.databaseConnect
-    }
-  },
+      },
+      previous() {
+        if (this.videoNum - 5 > 0) this.videoNum -= 5;
+        console.log(this.videoNum);
+        this.refresh();
+      },
+      next() {
+        const video = this.$store.state.video;
+        video.methods.videoNum().call().then((res) => {
+          console.log(this.videoNum);
+          if (this.videoNum + 5 < res) this.videoNum += 5;
+          this.refresh();
+        });
 
-  filters:{
+      }
+    },
+    created: function () {
+      if (this.$store.state.databaseConnect) {
+        this.init();
+      }
+    },
+    computed: {
+      databaseConnect() {
+        return this.$store.state.databaseConnect
+      }
+    },
+
+    filters: {}
   }
-}
 </script>
 
 <style scoped>
-  .videolist{
+  .videolist {
   }
-  .videolist ul{
+
+  .videolist ul {
     list-style-type: none;
     padding: 0;
     overflow: auto;
     height: 400px;
   }
-  .videolist li{
+
+  .videolist li {
     width: 200px;
     float: left;
     margin: 0;
   }
-  .videolist img{
+
+  .videolist img {
     max-width: 100px;
     max-width: 60px;
   }
-  .button{
+
+  .button {
     position: absolute;
     right: 360px;
     top: 0;

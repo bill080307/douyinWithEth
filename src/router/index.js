@@ -15,20 +15,20 @@ export default new Router({
       component: Weclome
     },
     {
-      path: '/video',
+      path: '/video/:id',
       name: 'Video',
       component: Video
     },
-      {
-          path: '/setting',
-          name: 'Setting',
-          component: Setting
-      }
-      ,
-      {
-          path: '/upload',
-          name: 'Upload',
-          component: Upload
-      }
+    {
+      path: '/setting',
+      name: 'Setting',
+      component: Setting
+    }
+    ,
+    {
+      path: '/upload',
+      name: 'Upload',
+      component: Upload
+    }
   ]
 })
