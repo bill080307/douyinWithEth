@@ -35,7 +35,7 @@ export default {
                 if(res.nickname!='')this.nickname = res.nickname;
                 if(res.info!='')this.info = res.info;
                 ipfs.files.get(this.avatar, (err, files)=> {
-                    let blob = new Blob([files[0].content], {type:'image/jpeg'});
+                    let blob = new Blob([files[0].content]);
                     this.avatarfile= URL.createObjectURL(blob);
                 })
             });
