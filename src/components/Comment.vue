@@ -1,20 +1,21 @@
 <template>
   <div class="comment" v-show="databaseConnect">
     <ul>
-      <li v-for="n in 5">
-        <div class="user"><router-link to="/">{{ address | addressab }}</router-link></div>
+      <li v-for="item in list">
+        <div class="user"><router-link to="/">{{ item.author | addressab }}</router-link></div>
         <div class="date">
-          <span class="pub">{{ pubtime | formatDate }}</span>
-          <span class="vidoe">{{ vidoetime | formatvideotime }}</span>
+          <span class="pub">{{ item.pubtime | formatDate }}</span>
+          <span class="vidoe">{{ item.vidoetime | formatvideotime }}</span>
         </div>
         <div class="content">
-          {{ content }} - {{ n }}
+          {{ item.content }}
         </div>
       </li>
     </ul>
     <div class="newcomment">
-      <textarea></textarea>
-      <input type="number" :value="vidoetime"/><button>publish</button>
+      <textarea v-model="content"></textarea>
+      <input type="number" v-model="vidoetime" :max="duration"/>
+      <button @click="publish">publish</button>
     </div>
   </div>
 </template>
@@ -24,22 +25,54 @@ export default {
   name: 'Comment',
   data () {
     return {
-      address:'0x1234567890ABCDEF0x12345601234567890ABCDEF',
-      pubtime: '1540441233',
-      vidoetime: '12377598',
-      content: 'This is my comment'
+        vidoetime: 0,
+        duration:0,
+        content: '',
+        videoid:null,
+        commentsNum:null,
+        list:[],
     }
   },
+    methods:{
+      init(){
+          this.videoid=this.$store.state.videoId;
+          const video = this.$store.state.video;
+          video.methods.getVideoPreview(this.videoid).call().then((res)=>{
+              this.commentsNum=res.commentsNum;
+              for(var i=0;i<this.commentsNum;i++){
+                  video.methods.getVideoComment(this.videoid,i).call().then((res)=>{
+                      this.list.push({
+                          author:res.author,
+                          content:res.content,
+                          pubtime:res.timestamp,
+                          vidoetime:res.videotimestamp,
+                      });
+                  });
+              }
+          });
+      },
+        publish(){
+            if(this.content=='')return;
+            if(this.vidoetime>this.$store.state.videoTime)return;
+            const video = this.$store.state.video;
+            video.methods.makeComment(this.videoid,this.vidoetime,this.content).send({
+                from: this.$store.state.userAccount
+            }).then();
+        }
+},
+created:function () {
+    if(this.$store.state.databaseConnect){
+        this.init();
+    }
+},
   computed:{
     databaseConnect() {
       return this.$store.state.databaseConnect
-    }
+    },
+      videoId(){
+          return this.$store.state.videoId
+      }
   },
-  filters:{
-    addressab:function (address) {
-      return address.substr(0,5)+'...'+address.substr(8,3);
-    }
-  }
 }
 </script>
 

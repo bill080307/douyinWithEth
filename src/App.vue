@@ -33,7 +33,6 @@ export default {
             web3.eth.getAccounts((error, result) => {
                 if(result.length>0){
                     this.$store.commit('setUserAccount', result[0]);
-                    console.log(this.$store.state.userAccount);
                 }
             })
         }

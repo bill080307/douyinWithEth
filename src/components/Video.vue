@@ -32,11 +32,17 @@ export default {
   },methods:{
         init(){
             this.videoid=this.$route.query.id;
+            this.$store.commit('setVideoId', this.videoid);
             const video = this.$store.state.video;
             video.methods.getVideo(this.videoid).call().then((res)=>{
+                console.log(res);
+                this.$store.commit('setCommentsNum', res.commentsNum);
                 this.title = res.title;
                 this.description = res.info;
                 const info = JSON.parse(res.videoinfo);
+                if(info.duration>0){
+                    this.$store.commit('setVideoTime', info.duration);
+                }
                 //TODO 视频信息显示
                 ipfs.files.get(res.videofile, (err, files)=> {
                     let blob = new Blob([files[0].content]);

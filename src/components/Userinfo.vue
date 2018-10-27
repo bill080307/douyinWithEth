@@ -6,7 +6,6 @@
       <p class="info">{{ info }}</p>
       <p>
         <router-link to="/">Welcome</router-link>
-        <router-link to="/video">video</router-link>
         <router-link to="/setting">Setting</router-link>
         <router-link to="/upload">Upload</router-link>
       </p>

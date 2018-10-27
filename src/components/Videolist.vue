@@ -39,7 +39,6 @@ export default {
                 while (num>this.videoNum-5&&num>=0){
                     var cnum=num;
                     video.methods.getVideoPreview(num).call().then((res)=>{
-                        console.log(res);
                         ipfs.files.get(res.cover, (err, files)=> {
                             let blob = new Blob([files[0].content]);
                             this.list.push({
@@ -54,7 +53,6 @@ export default {
 
                     });
                     num--;
-                    console.log(this.list);
                 }
             });
         }

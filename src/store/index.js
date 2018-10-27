@@ -10,6 +10,9 @@ export default new Vuex.Store({
       videoAddress:"0xd26265e62e4de544824f988e5a985e3ebaaaca1f",
       video:null,
       userAccount:null,
+      videoId:0,
+      commentsNum:0,
+      videoTime:0,
   },
   mutations: {
     setDatabaseConnect(state, visible){
@@ -20,6 +23,15 @@ export default new Vuex.Store({
       },
       setUserAccount(state, visible){
           state.userAccount = visible
+      },
+      setVideoId(state, visible){
+          state.videoId = visible
+      },
+      setCommentsNum(state, visible){
+          state.commentsNum = visible
+      },
+      setVideoTime(state, visible){
+          state.videoTime = visible
       }
   },
   actions: {

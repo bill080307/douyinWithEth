@@ -23,6 +23,9 @@ export function formatvideotime(inputTime) {
   return inputTime+':'+second+'.'+Millisecond;
 }
 
+export function addressab(address) {
+    return address.substr(0,5)+'...'+address.substr(39,3);
+}
 // 日期格式化 'yyyy-MM-dd hh:mm'
 // export function formatDate(time, fmt,isDate = false) {
 //   let date
