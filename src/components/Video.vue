@@ -1,8 +1,8 @@
 <template>
   <div class="video">
     <video :src="videofile" controls="controls"></video>
-    <div class="videoinfo">
-      <h1>{{ title }}</h1>
+    <h1>{{ title }}</h1>
+    <div class="videoinfo" v-show="databaseConnect">
       <p class="description">{{ description }}</p>
       <span class="fileinfo">{{ fileinfo }}</span>
       <span>
@@ -10,7 +10,7 @@
         <button @click="gratuity">gratuity</button>
         <input type="text" v-model="textlable"/>
         <button @click="lable">lable</button>
-        <button @click="share">share</button>
+        <router-link :to="'/share/'+videoid">share</router-link>
       </span>
     </div>
   </div>
@@ -22,14 +22,15 @@
     data() {
       return {
         title: '',
-        description: 'description',
+        description: '',
         fileinfo: '',
         videofile: '',
         textgratuity: 1,
         textlable: '',
         videoid: 0,
       }
-    }, methods: {
+    },
+    methods: {
       init() {
         this.videoid = this.$route.params.id;
         this.$store.commit('setVideoId', this.videoid);
@@ -51,7 +52,8 @@
         });
       },
       preview() {
-
+        this.videofile = '/ipfs/'+this.$route.params.path;
+        this.title=this.$route.params.title;
       },
       gratuity() {
         const video = this.$store.state.video;
@@ -67,12 +69,9 @@
           from: this.$store.state.userAccount
         }).then();
       },
-      share() {
-
-      }
     },
     created: function () {
-      if (this.$store.state.databaseConnect) {
+      if (this.$store.state.databaseConnect&&this.$route.params.id) {
         this.init();
       } else {
         this.preview();

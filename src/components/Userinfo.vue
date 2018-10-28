@@ -42,7 +42,7 @@
               this.avatarfile = URL.createObjectURL(blob);
             })
           });
-        } else {
+        } else if(this.$store.state.databaseConnect) {
           ipfs.files.get(this.avatar, (err, files) => {
             let blob = new Blob([files[0].content]);
             this.avatarfile = URL.createObjectURL(blob);

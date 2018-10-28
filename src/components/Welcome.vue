@@ -45,14 +45,14 @@
           })
         } else {
           Axios.get('/ipfs/' + this.languages[this.languageSelected].path).then((res) => {
-            console.log(res)
+            this.content = res.data.toString('utf8')
           })
         }
 
       }
     },
     created() {
-      this.languageSelected = this.languages[0].lang;
+      this.languageSelected = this.languages['en'].lang;
     },
   }
 </script>

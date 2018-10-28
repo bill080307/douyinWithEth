@@ -4,6 +4,7 @@ import Weclome from '@/components/Welcome'
 import Video from '@/components/Video'
 import Setting from '@/components/Setting'
 import Upload from '@/components/Upload'
+import Share from '@/components/Share'
 
 Vue.use(Router)
 
@@ -18,6 +19,16 @@ export default new Router({
       path: '/video/:id',
       name: 'Video',
       component: Video
+    },
+    {
+      path: '/v/:path/:title',
+      name: 'Video',
+      component: Video
+    },
+    {
+      path: '/share/:id',
+      name: 'Share',
+      component: Share
     },
     {
       path: '/setting',
