@@ -108,7 +108,7 @@
         return this.$store.state.databaseConnect
       },
       weburl() {
-        return this.gatewaySelect + this.baseUrl + '#/v/' + this.videofile + '/' + this.title;
+        return this.gatewaySelect + this.baseUrl + '#/v/' + this.videofile + '/' + encodeURI(this.title);
       },
       playurl() {
         return this.gatewaySelect + '/ipfs/' + this.videofile;
