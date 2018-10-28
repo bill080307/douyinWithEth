@@ -39,10 +39,11 @@
       },
       refresh() {
         const video = this.$store.state.video;
-        var num = this.videoNum - 1;
+        let num = this.videoNum - 1;
+
         this.list = [];
-        while (num > this.videoNum - 5 && num >= 0) {
-          var cnum = num;
+        while ( num > this.videoNum - 5 && num >= 0) {
+          let cnum = num;
           video.methods.getVideoPreview(num).call().then((res) => {
             ipfs.files.get(res.cover, (err, files) => {
               let blob = new Blob([files[0].content]);
@@ -53,7 +54,7 @@
                 gratuity: res.gratuityNum,
                 comment: res.commentsNum,
                 videoid: cnum
-              });
+            });
             })
           });
           num--;
