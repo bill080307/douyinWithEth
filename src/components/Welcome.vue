@@ -38,17 +38,9 @@
     methods: {
       handleLanguage(e) {
         this.$i18n.locale = this.languageSelected;
-
-        if (this.$store.state.databaseConnect) {
-          ipfs.files.get(this.languages[this.languageSelected].path, (err, files) => {
-            this.content = files[0].content.toString('utf8')
-          })
-        } else {
-          Axios.get('/ipfs/' + this.languages[this.languageSelected].path).then((res) => {
-            this.content = res.data.toString('utf8')
-          })
-        }
-
+        Axios.get('/ipfs/' + this.languages[this.languageSelected].path).then((res) => {
+          this.content = res.data.toString('utf8')
+        })
       }
     },
     created() {

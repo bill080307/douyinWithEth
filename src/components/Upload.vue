@@ -90,7 +90,7 @@ export default {
                 h:this.height,
                 vc:this.videoFormat,
                 ac:this.audioFormat
-            }
+            };
             var a = video.methods.publish(this.title, this.cover, this.file,
                 JSON.stringify(videoinfo),this.description)
                 .send({ from: this.$store.state.userAccount })

@@ -35,6 +35,7 @@ export default {
   },
     methods:{
       init(){
+
           this.videoid=this.$store.state.videoId;
           const video = this.$store.state.video;
           video.methods.getVideoPreview(this.videoid).call().then((res)=>{
@@ -61,7 +62,7 @@ export default {
         }
 },
 created:function () {
-    if(this.$store.state.databaseConnect){
+    if(this.$store.state.databaseConnect&&this.$store.state.videoId){
         this.init();
     }
 },
@@ -73,6 +74,13 @@ created:function () {
           return this.$store.state.videoId
       }
   },
+  watch:{
+    videoId(){
+      if(this.$store.state.videoId){
+        this.init();
+      }
+    }
+  }
 }
 </script>
 

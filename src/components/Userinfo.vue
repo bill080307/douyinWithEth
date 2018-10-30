@@ -37,16 +37,10 @@
             if (res.nickname != '') this.nickname = res.nickname;
             if (res.info != '') this.info = res.profile;
             if (res.avatar != '') this.avatar = res.avatar;
-            ipfs.files.get(this.avatar, (err, files) => {
-              let blob = new Blob([files[0].content]);
-              this.avatarfile = URL.createObjectURL(blob);
-            })
+            this.avatarfile = '/ipfs/'+this.avatar;
           });
         } else if(this.$store.state.databaseConnect) {
-          ipfs.files.get(this.avatar, (err, files) => {
-            let blob = new Blob([files[0].content]);
-            this.avatarfile = URL.createObjectURL(blob);
-          })
+          this.avatarfile = '/ipfs/'+this.avatar;
         }
       }
     },

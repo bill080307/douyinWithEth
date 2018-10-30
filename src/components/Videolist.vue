@@ -33,6 +33,7 @@
       init() {
         const video = this.$store.state.video;
         video.methods.videoNum().call().then((res) => {
+          console.log(res);
           this.videoNum = res;
           this.refresh();
         });
@@ -45,17 +46,14 @@
         while ( num > this.videoNum - 5 && num >= 0) {
           let cnum = num;
           video.methods.getVideoPreview(num).call().then((res) => {
-            ipfs.files.get(res.cover, (err, files) => {
-              let blob = new Blob([files[0].content]);
-              this.list.push({
-                title: res.title,
-                cover: URL.createObjectURL(blob),
-                time: res.timestamp,
-                gratuity: res.gratuityNum,
-                comment: res.commentsNum,
-                videoid: cnum
+            this.list.push({
+              title: res.title,
+              cover: '/ipfs/'+res.cover,
+              time: res.timestamp,
+              gratuity: res.gratuityNum,
+              comment: res.commentsNum,
+              videoid: cnum
             });
-            })
           });
           num--;
         }
@@ -85,7 +83,6 @@
         return this.$store.state.databaseConnect
       }
     },
-
     filters: {}
   }
 </script>

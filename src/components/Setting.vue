@@ -27,13 +27,10 @@ export default {
         init(){
             const video = this.$store.state.video;
             video.methods.getUserInfo(this.$store.state.userAccount).call().then((res)=>{
-                if(res.avatar!='')this.avatar = res.avatar;
-                if(res.nickname!='')this.nickname = res.nickname;
-                if(res.info!='')this.info = res.profile;
-                ipfs.files.get(this.avatar, (err, files)=> {
-                    let blob = new Blob([files[0].content]);
-                    this.avatarfile= URL.createObjectURL(blob);
-                })
+              if(res.avatar!='')this.avatar = res.avatar;
+              if(res.nickname!='')this.nickname = res.nickname;
+              if(res.info!='')this.info = res.profile;
+              this.avatarfile = '/ipfs/'+this.avatar;
             });
         },
         save(){

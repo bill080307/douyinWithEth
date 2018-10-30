@@ -44,11 +44,7 @@
             this.$store.commit('setVideoTime', info.duration);
           }
           //TODO 视频信息显示
-          ipfs.files.get(res.videofile, (err, files) => {
-            let blob = new Blob([files[0].content]);
-            this.videofile = URL.createObjectURL(blob);
-          })
-          console.log(res);
+          this.videofile = '/ipfs/'+res.videofile
         });
       },
       preview() {

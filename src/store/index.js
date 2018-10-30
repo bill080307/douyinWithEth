@@ -10,7 +10,7 @@ export default new Vuex.Store({
       videoAddress:"0xd26265e62e4de544824f988e5a985e3ebaaaca1f",
       video:null,
       userAccount:null,
-      videoId:0,
+      videoId:null,
       commentsNum:0,
       videoTime:0,
   },
