@@ -1,7 +1,7 @@
 <template>
   <div class="videolist" v-show="databaseConnect">
     <ul>
-      <li v-for="item in list">
+      <li v-for="item in sortlist">
         <router-link :to="'/video/'+item.videoid">
           <img :src="item.cover">
           <p class="title">{{ item.title }}</p>
@@ -15,7 +15,10 @@
     </ul>
     <div class="button">
       <button @click="previous">Previous</button>
+      <button @click="init">Refresh</button>
       <button @click="next">Next</button>
+      <input type="number" v-model="videoIn"/>
+      <button @click="go">GO</button>
     </div>
   </div>
 </template>
@@ -25,6 +28,7 @@
     name: 'Videolist',
     data() {
       return {
+        videoIn: 0,
         videoNum: 0,
         list: [],
       }
@@ -35,20 +39,21 @@
         video.methods.videoNum().call().then((res) => {
           console.log(res);
           this.videoNum = res;
+          this.videoIn = res;
           this.refresh();
         });
       },
       refresh() {
         const video = this.$store.state.video;
-        let num = this.videoNum - 1;
+        let num = this.videoIn - 1;
 
         this.list = [];
-        while ( num > this.videoNum - 5 && num >= 0) {
+        while (num > this.videoIn - 5 && num >= 0) {
           let cnum = num;
           video.methods.getVideoPreview(num).call().then((res) => {
             this.list.push({
               title: res.title,
-              cover: '/ipfs/'+res.cover,
+              cover: '/ipfs/' + res.cover,
               time: res.timestamp,
               gratuity: res.gratuityNum,
               comment: res.commentsNum,
@@ -59,18 +64,17 @@
         }
       },
       previous() {
-        if (this.videoNum - 5 > 0) this.videoNum -= 5;
-        console.log(this.videoNum);
+        if (this.videoIn - 5 > 0) this.videoIn -= 5;
         this.refresh();
       },
       next() {
-        const video = this.$store.state.video;
-        video.methods.videoNum().call().then((res) => {
-          console.log(this.videoNum);
-          if (this.videoNum + 5 < res) this.videoNum += 5;
+        if (this.videoIn + 5 < this.videoNum) this.videoIn += 5;
+        this.refresh();
+      },
+      go() {
+        if (this.videoIn > 0 && this.videoIn <= this.videoNum) {
           this.refresh();
-        });
-
+        }
       }
     },
     created: function () {
@@ -81,6 +85,11 @@
     computed: {
       databaseConnect() {
         return this.$store.state.databaseConnect
+      },
+      sortlist() {
+        return this.list.sort((a, b) => {
+          return a.videoid - b.videoid;
+        });
       }
     },
     filters: {}

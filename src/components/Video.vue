@@ -77,6 +77,11 @@
       databaseConnect() {
         return this.$store.state.databaseConnect
       },
+    },
+    watch:{
+      $route(to,from){
+        this.init();
+      }
     }
   }
 </script>
