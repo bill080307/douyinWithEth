@@ -92,9 +92,12 @@ created:function () {
     list-style-type: none;
     padding: 0;
     overflow: auto;
-    height: 400px;
   }
   .newcomment{
-
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 80px;
+    width: 360px;
   }
 </style>

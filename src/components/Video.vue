@@ -83,9 +83,7 @@
 
 <style scoped>
   .video {
-    padding-right: 360px;
-    padding-bottom: 180px;
-    overflow: auto;
+
   }
 
   video {

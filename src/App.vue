@@ -16,71 +16,77 @@
 </template>
 
 <script>
-import Userinfo from "./components/Userinfo";
-import Comment from "./components/Comment";
-import Videolist from "./components/Videolist";
-export default {
-  name: 'App',
-  components: {Videolist, Comment, Userinfo},
-  methods:{
-    init(){
-        if((typeof web3 !== 'undefined')&&(typeof window.ipfs !== 'undefined')){
-            var Web3 = require('web3');
-            var web3js = new Web3(web3.currentProvider);
-            var video = new web3js.eth.Contract(this.$store.state.videoAbi, this.$store.state.videoAddress);
-            this.$store.commit('setVideo', video);
-            this.$store.commit('setDatabaseConnect', true);
-            web3.eth.getAccounts((error, result) => {
-                if(result.length>0){
-                    this.$store.commit('setUserAccount', result[0]);
-                }
-            })
+  import Userinfo from "./components/Userinfo";
+  import Comment from "./components/Comment";
+  import Videolist from "./components/Videolist";
+
+  export default {
+    name: 'App',
+    components: {Videolist, Comment, Userinfo},
+    methods: {
+      init() {
+        if ((typeof web3 !== 'undefined') && (typeof window.ipfs !== 'undefined')) {
+          var Web3 = require('web3');
+          var web3js = new Web3(web3.currentProvider);
+          var video = new web3js.eth.Contract(this.$store.state.videoAbi, this.$store.state.videoAddress);
+          this.$store.commit('setVideo', video);
+          this.$store.commit('setDatabaseConnect', true);
+          web3.eth.getAccounts((error, result) => {
+            if (result.length > 0) {
+              this.$store.commit('setUserAccount', result[0]);
+            }
+          })
         }
+      }
+    },
+    created: function () {
+      this.init();
     }
-  },
-  created:function () {
-    this.init();
   }
-}
 </script>
 
 <style>
-  body,html{
+  body, html {
     padding: 0;
     margin: 0;
   }
+
   #app {
     position: fixed;
     width: 100%;
     height: 100%;
+    min-width: 800px;
   }
+
   #video {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    padding-right: 100px;
+    position: absolute;
+    width: calc(100% - 360px);
+    height: calc(100% - 120px);
+    overflow: auto;
   }
-  #videolist{
-    position: fixed;
-    width: 100%;
-    height: 180px;
+
+  #videolist {
+    position: absolute;
+    width: calc(100% - 360px);
+    height: 120px;
     bottom: 0;
-    right: 0;
+    left: 0;
   }
-  #userinfo{
-    position: fixed;
+
+  #userinfo {
+    position: absolute;
     width: 360px;
     height: 130px;
     top: 0;
     right: 0;
   }
-  #comment{
-    position: fixed;
+
+  #comment {
+    position: absolute;
     width: 360px;
-    height: 100%;
-    top: 0;
+    height: calc(100% - 130px);
+    top: 130px;
     right: 0;
-    margin-top: 130px;
   }
 
 </style>

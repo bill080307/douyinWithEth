@@ -111,7 +111,7 @@
 
   .button {
     position: absolute;
-    right: 360px;
+    right: 0;
     top: 0;
   }
 </style>
