@@ -1,13 +1,13 @@
 <template>
   <div class="setting" v-show="databaseConnect">
-    <h1>User Setting</h1>
+    <h1>{{ $t("message.user_setting") }}</h1>
       <img class="avatar" :src="avatarfile" alt="">
       <p class="nickname">{{ nickname }}</p>
       <p class="info">{{ info }}</p>
     <input type="text" v-model="nickname"><br>
     <textarea v-model="info"></textarea><br>
     <input type="file" id="file"><br>
-    <button type="button" @click="save">save</button>
+    <button type="button" @click="save">{{ $t("message.save") }}</button>
     <hr>
   </div>
 </template>
@@ -17,8 +17,8 @@ export default {
   name: 'Setting',
   data () {
     return {
-      nickname: 'nickname',
-      info: 'My info.',
+      nickname: '',
+      info: '',
         avatar:'QmbApgSEbuX3dQGXornrDNhASxBWEFPgYxGYKzvNxKMhcY',
         avatarfile:null
     }

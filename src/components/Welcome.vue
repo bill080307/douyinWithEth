@@ -1,10 +1,9 @@
 <template>
   <div class="welcome">
-    language
+    {{ $t("message.language") }}:
     <select v-model="languageSelected" @change="handleLanguage">
       <option :value="coupon.lang" v-for="coupon in languages">{{coupon.name}}</option>
     </select>
-    {{ $t("message.hello")}}
     <div class="content">
       {{ content }}
     </div>
@@ -38,13 +37,18 @@
     methods: {
       handleLanguage(e) {
         this.$i18n.locale = this.languageSelected;
-        Axios.get('/ipfs/' + this.languages[this.languageSelected].path).then((res) => {
+        localStorage.setItem("lang",this.languageSelected);
+        this.getHtml(this.languages[this.languageSelected].path);
+      },
+      getHtml(hash){
+        Axios.get('/ipfs/' + hash).then((res) => {
           this.content = res.data.toString('utf8')
         })
       }
     },
     created() {
-      this.languageSelected = this.languages['en'].lang;
+      this.languageSelected = localStorage.getItem("lang");
+      this.getHtml(this.languages[this.languageSelected].path);
     },
   }
 </script>

@@ -25,6 +25,14 @@
     components: {Videolist, Comment, Userinfo},
     methods: {
       init() {
+        if(localStorage.getItem("lang")==null){
+          let lang = navigator.language;
+          lang = lang.toLowerCase();
+          lang = lang.replace('-','_');
+          //TODO 判断语言是否在国际化内，如果不在则是指为en。
+          localStorage.setItem("lang",lang)
+        }
+        this.$i18n.locale = localStorage.getItem("lang");
         if ((typeof web3 !== 'undefined') && (typeof window.ipfs !== 'undefined')) {
           var Web3 = require('web3');
           var web3js = new Web3(web3.currentProvider);

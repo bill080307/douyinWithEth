@@ -5,9 +5,9 @@
       <p class="nickname">{{ nickname }}</p>
       <p class="info">{{ info }}</p>
       <p>
-        <router-link to="/">Welcome</router-link>
-        <router-link to="/setting">Setting</router-link>
-        <router-link to="/upload">Upload</router-link>
+        <router-link to="/">{{ $t("message.welcome") }}</router-link>
+        <router-link to="/setting">{{ $t("message.setting") }}</router-link>
+        <router-link to="/upload">{{ $t("message.upload") }}</router-link>
       </p>
     </div>
     <div v-show="!databaseConnect">
@@ -23,8 +23,8 @@
     name: 'Userinfo',
     data() {
       return {
-        nickname: 'nickname',
-        info: 'My info.',
+        nickname: this.$t("message.nickname_default"),
+        info: this.$t("message.userinfo_default"),
         avatar: 'QmbApgSEbuX3dQGXornrDNhASxBWEFPgYxGYKzvNxKMhcY',
         avatarfile: null
       }

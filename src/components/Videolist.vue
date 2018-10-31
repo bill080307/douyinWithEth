@@ -14,11 +14,11 @@
       </li>
     </ul>
     <div class="button">
-      <button @click="previous">Previous</button>
-      <button @click="init">Refresh</button>
-      <button @click="next">Next</button>
-      <input type="number" v-model="videoIn"/>
-      <button @click="go">GO</button>
+      <button @click="previous">{{ $t("message.previous_page") }}</button>
+      <button @click="init">{{ $t("message.refresh") }}</button>
+      <button @click="next">{{ $t("message.next_page") }}</button>
+      <input type="number" v-model="videoIn"/> / {{ videoNum }}
+      <button @click="go">{{ $t("message.jump") }}</button>
     </div>
   </div>
 </template>
@@ -68,7 +68,7 @@
         this.refresh();
       },
       next() {
-        if (this.videoIn + 5 < this.videoNum) this.videoIn += 5;
+        if (this.videoIn + 5 <= this.videoNum) this.videoIn += 5;
         this.refresh();
       },
       go() {

@@ -1,24 +1,24 @@
 <template>
   <div class="upload" v-show="databaseConnect">
-    <h1>Upload Video</h1>
-    title:<input type="text" v-model="title"><br>
-    cover:<input type="file" id="cover"><br>
-    video file:<input type="file" id="file"><br>
-    description:<br>
+    <h1>{{ $t("message.upload_video") }}</h1>
+    {{ $t("message.title") }}:<input type="text" v-model="title"><br>
+    {{ $t("message.cover") }}:<input type="file" id="cover"><br>
+    {{ $t("message.video_file") }}:<input type="file" id="file"><br>
+    {{ $t("message.description") }}:<br>
     <textarea v-model="description"></textarea><br>
-    <button @click="upload">1.upload files</button>
-    <button @click="db">2.Record data</button><br>
-    extend:<br>
+    <button @click="upload">1.{{ $t("message.upload_files") }}</button>
+    <button @click="db">2.{{ $t("message.record_data") }}</button><br>
+    {{ $t("message.extend") }}:<br>
     <video controls="controls" id="aa"></video>
-    filesize:<input type="number" v-model="filesize"><br>
-    duration:<input type="number" v-model="duration"><br>
-    Bit rate:<input type="number" v-model="bitRate"><br>
-    Frame rate:<input type="number" v-model="FPS"><br>
-    Bit depth:<input type="text" v-model="Bitdepth"><br>
-    Width:<input type="number" v-model="width"><br>
-    Height:<input type="number" v-model="height"><br>
-    video Format:<input type="text" v-model="videoFormat"><br>
-    audio Format:<input type="text" v-model="audioFormat"><br>
+    {{ $t("message.filesize") }}:<input type="number" v-model="filesize"><br>
+    {{ $t("message.duration") }}:<input type="number" v-model="duration"><br>
+    {{ $t("message.Bit_rate") }}:<input type="number" v-model="bitRate"><br>
+    {{ $t("message.frame_rate") }}:<input type="number" v-model="FPS"><br>
+    {{ $t("message.bit_depth") }}:<input type="text" v-model="Bitdepth"><br>
+    {{ $t("message.width") }}:<input type="number" v-model="width"><br>
+    {{ $t("message.height") }}:<input type="number" v-model="height"><br>
+    {{ $t("message.video_format") }}:<input type="text" v-model="videoFormat"><br>
+    {{ $t("message.audio_format") }}:<input type="text" v-model="audioFormat"><br>
   </div>
 </template>
 

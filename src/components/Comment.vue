@@ -1,5 +1,6 @@
 <template>
   <div class="comment" v-show="databaseConnect">
+    <p>{{ $t("message.comment") }}</p>
     <ul>
       <li v-for="item in list">
         <div class="user">

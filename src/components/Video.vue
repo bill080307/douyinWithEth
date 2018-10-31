@@ -7,10 +7,10 @@
       <span class="fileinfo">{{ fileinfo }}</span>
       <span>
           <input type="number" v-model="textgratuity"/>finney
-        <button @click="gratuity">gratuity</button>
+        <button @click="gratuity">{{ $t("message.gratuity") }}</button>
         <input type="text" v-model="textlable"/>
-        <button @click="lable">lable</button>
-        <router-link :to="'/share/'+videoid">share</router-link>
+        <button @click="lable">{{ $t("message.lable") }}</button>
+        <router-link :to="'/share/'+videoid">{{ $t("message.share") }}</router-link>
       </span>
     </div>
   </div>

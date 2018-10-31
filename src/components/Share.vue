@@ -2,7 +2,7 @@
   <div class="share">
     <div class="videoinfo">
       <h1>{{ title }}</h1>
-      <p>gateway
+      <p>{{ $t("message.gateway") }}
         <select v-model="gatewaySelect">
           <option :value="coupon.gw" v-for="coupon in gateway">{{coupon.gw}}</option>
         </select>
@@ -11,8 +11,8 @@
           <!--<option :value="coupon.server" v-for="coupon in tlink">{{coupon.server}}</option>-->
         <!--</select>-->
       </p>
-      <p>player url:<a :href="weburl">{{ weburl }}</a></p>
-      <p>video url:<a :href="playurl">{{ playurl }}</a></p>
+      <p>{{ $t("message.player_url") }}:<a :href="weburl">{{ weburl }}</a></p>
+      <p>{{ $t("message.video_url") }}:<a :href="playurl">{{ playurl }}</a></p>
     </div>
   </div>
 </template>
