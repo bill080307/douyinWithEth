@@ -48,7 +48,7 @@
         let num = this.videoIn - 1;
 
         this.list = [];
-        while (num > this.videoIn - 5 && num >= 0) {
+        while (num >= this.videoIn - 5 && num >= 0) {
           let cnum = num;
           video.methods.getVideoPreview(num).call().then((res) => {
             this.list.push({

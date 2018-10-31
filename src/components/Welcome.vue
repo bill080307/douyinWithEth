@@ -4,9 +4,7 @@
     <select v-model="languageSelected" @change="handleLanguage">
       <option :value="coupon.lang" v-for="coupon in languages">{{coupon.name}}</option>
     </select>
-    <div class="content">
-      {{ content }}
-    </div>
+    <div class="content" v-html="content"></div>
   </div>
 </template>
 
@@ -22,12 +20,12 @@
           'en': {
             lang: 'en',
             name: 'English',
-            path: 'QmcSXkUAdMeem6rmzb7MJPyvbshNNeT36xGihTvQb71cPu'
+            path: 'QmQpt23A9PZjgLq8zLfwXnXrxk9zSzMcE5y4XHtzjAmjGF'
           },
           'zh_cn': {
             lang: 'zh_cn',
             name: '简体中文',
-            path: 'QmWHtd1rSyatT14SnKga7VeRy96bgVcRRz5cAnL1XwkemG'
+            path: 'QmZKNuf1qd73eDZyM3ST5mjJoZAJeXW38iFyCCr6a1wrje'
           }
 
         },

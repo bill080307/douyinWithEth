@@ -13,6 +13,7 @@
       </p>
       <p>{{ $t("message.player_url") }}:<a :href="weburl">{{ weburl }}</a></p>
       <p>{{ $t("message.video_url") }}:<a :href="playurl">{{ playurl }}</a></p>
+
     </div>
   </div>
 </template>

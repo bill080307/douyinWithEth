@@ -76,6 +76,7 @@
 
   .nickname {
     font-weight: bolder;
+    margin-left: 60px;
   }
 
   .info {

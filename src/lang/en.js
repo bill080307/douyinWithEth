@@ -1,8 +1,10 @@
 export default {
   message: {
     language: 'language',
+    nickname: 'nickname',
     nickname_default: 'nickname',
     userinfo_default: 'userinfo',
+    userinfo: 'userinfo',
     welcome: 'welcome',
     setting: 'setting',
     upload: 'upload',

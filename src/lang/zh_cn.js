@@ -1,8 +1,10 @@
 export default {
   message: {
     language: '语言',
+    nickname: '昵称',
     nickname_default: '昵称',
     userinfo_default: '简介',
+    userinfo: '简介',
     welcome: '欢迎',
     setting: '设置',
     upload: '上传',

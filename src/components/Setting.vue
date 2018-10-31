@@ -4,7 +4,8 @@
       <img class="avatar" :src="avatarfile" alt="">
       <p class="nickname">{{ nickname }}</p>
       <p class="info">{{ info }}</p>
-    <input type="text" v-model="nickname"><br>
+    {{ $t("message.nickname") }}<input type="text" v-model="nickname"><br>
+    {{ $t("message.userinfo") }}<br>
     <textarea v-model="info"></textarea><br>
     <input type="file" id="file"><br>
     <button type="button" @click="save">{{ $t("message.save") }}</button>
@@ -84,6 +85,7 @@ export default {
   }
   .nickname{
     font-weight: bolder;
+    margin-left: 60px;
   }
   .info{
     clear: both;
