@@ -76,7 +76,7 @@
   #videolist {
     position: absolute;
     width: calc(100% - 360px);
-    height: 120px;
+    height: 150px;
     bottom: 0;
     left: 0;
   }
