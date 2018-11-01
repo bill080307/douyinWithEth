@@ -7,7 +7,7 @@
     {{ $t("message.description") }}:<br>
     <textarea v-model="description"></textarea><br>
     <button @click="upload">1.{{ $t("message.upload_files") }}</button>
-    <button @click="db">2.{{ $t("message.record_data") }}</button><br>
+    <button @click="db" v-bind:disabled="dis">2.{{ $t("message.record_data") }}</button><br>
     {{ $t("message.extend") }}:<br>
     <video controls="controls" id="aa"></video>
     {{ $t("message.filesize") }}:<input type="number" v-model="filesize"><br>
@@ -40,6 +40,7 @@ export default {
         height:'',
         videoFormat:'AVC',
         audioFormat:'AAC',
+      dis:true,
     }
   },
     methods:{
@@ -64,26 +65,24 @@ export default {
                     console.log(response);
                     self_.file = response[0].hash;
                     self_.filesize = response[0].size;
+                    var video=document.getElementById("aa");
+                    video.src = '/ipfs/'+self_.file;
+                  setTimeout(()=>{
+                    self_.width= video.videoWidth;
+                    self_.height= video.videoHeight;
+                    self_.duration= Math.floor(video.duration*1000);
+                    console.log(video.duration);
+                    self_.dis=false;
+                  },2000)
                 })
             }
-            var file = document.getElementById('file').files[0];
-            var url = URL.createObjectURL(file);
-            var video=document.getElementById("aa")
-            video.src=url;
-            console.log(url);
-            setTimeout(()=>{
-                this.width= video.videoWidth;
-                this.height= video.videoHeight;
-                this.duration= Math.floor(video.duration*1000);
-                console.log(video.duration);
-            },2000)
         },
         db(){
             const video = this.$store.state.video;
             const videoinfo = {
                 size:this.filesize,
                 duration:this.duration,
-                rate:Math.floor(this.filesize/(this.duration/1000)),
+                rate:Math.floor(this.filesize/(this.duration/1000)*8),
                 fps:this.FPS,
                 bitdepth:this.Bitdepth,
                 w:this.width,

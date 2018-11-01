@@ -69,7 +69,7 @@
   #video {
     position: absolute;
     width: calc(100% - 360px);
-    height: calc(100% - 120px);
+    height: calc(100% - 150px);
     overflow: auto;
   }
 

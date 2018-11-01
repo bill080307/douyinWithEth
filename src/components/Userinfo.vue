@@ -1,13 +1,13 @@
 <template>
   <div class="userinfo">
     <div v-show="databaseConnect">
-      <img class="avatar" :src="avatarfile" alt="">
+      <div class="avatar"><img :src="avatarfile"></div>
       <p class="nickname">{{ nickname }}</p>
       <p class="info">{{ info }}</p>
       <p>
         <router-link to="/">{{ $t("message.welcome") }}</router-link>
-        <router-link to="/setting">{{ $t("message.setting") }}</router-link>
-        <router-link to="/upload">{{ $t("message.upload") }}</router-link>
+        <router-link to="/setting" v-show="userAccount">{{ $t("message.setting") }}</router-link>
+        <router-link to="/upload" v-show="userAccount">{{ $t("message.upload") }}</router-link>
       </p>
     </div>
     <div v-show="!databaseConnect">
@@ -69,11 +69,14 @@
 
   .avatar {
     display: inline-block;
-    max-width: 60px;
-    max-height: 60px;
+    width: 60px;
+    height: 60px;
     float: left;
   }
-
+  .avatar img{
+    max-width: 60px;
+    max-height: 60px;
+  }
   .nickname {
     font-weight: bolder;
     margin-left: 60px;

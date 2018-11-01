@@ -1,5 +1,5 @@
 <template>
-  <div class="setting" v-show="databaseConnect">
+  <div class="setting" v-show="databaseConnect&&userAccount">
     <h1>{{ $t("message.user_setting") }}</h1>
       <img class="avatar" :src="avatarfile" alt="">
       <p class="nickname">{{ nickname }}</p>

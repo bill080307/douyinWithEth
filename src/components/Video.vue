@@ -6,7 +6,7 @@
       <p class="description">{{ description }}</p>
       <span class="fileinfo">{{ fileinfo }}</span>
       <span>
-          <input type="number" v-model="textgratuity"/>finney
+          <input type="number" v-model="textgratuity" min="0"/>finney
         <button @click="gratuity">{{ $t("message.gratuity") }}</button>
         <input type="text" v-model="textlable"/>
         <button @click="lable">{{ $t("message.lable") }}</button>
@@ -43,7 +43,24 @@
           if (info.duration > 0) {
             this.$store.commit('setVideoTime', info.duration);
           }
-          //TODO 视频信息显示
+          if(info.size){
+            this.fileinfo += 'size:'+(info.size/1024/1024).toFixed(2)+'M ';
+          }
+          if(info.duration) {
+            this.fileinfo += 'time:' + (info.duration / 1000).toFixed(0) + 's '
+          }
+          if(info.rate){
+            this.fileinfo += 'bit rate:' + (info.rate / 1000).toFixed(2) + 'kbps '
+          }
+          if(info.fps){
+            this.fileinfo += 'FPS:' + info.fps + ' '
+          }
+          if(info.w){
+            this.fileinfo += 'width:' + info.w + ' '
+          }
+          if(info.h){
+            this.fileinfo += 'height:' + info.h + ' '
+          }
           this.videofile = '/ipfs/'+res.videofile
         });
       },
