@@ -25,7 +25,7 @@
           'zh_cn': {
             lang: 'zh_cn',
             name: '简体中文',
-            path: 'QmRuQ2UFtwgCMhkXUBp3jHpzTxt5Uiwxmv6qSkTyabHSeU'
+            path: 'QmVXKJ8sMcZHTbax9MKRwHo46ekQC9hs1oHTpzcVPwcSWE'
           }
 
         },
