@@ -55,7 +55,7 @@
           video.methods.getVideoPreview(num).call().then((res) => {
             this.list.push({
               title: res.title,
-              cover: 'http://127.0.0.1:8080/ipfs/' + res.cover,
+              cover: '/ipfs/' + res.cover,
               time: res.timestamp,
               gratuity: res.gratuityNum,
               comment: res.commentsNum,
