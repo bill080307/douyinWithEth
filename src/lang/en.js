@@ -41,5 +41,8 @@ export default {
     gateway:'gateway',
     player_url: 'player_url',
     video_url:'video_url',
+    no_database_connect:'No database connect',
+    please_click:'Please click',
+    to_connect:'to connect',
   }
 }

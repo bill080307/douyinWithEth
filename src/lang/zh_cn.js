@@ -41,5 +41,8 @@ export default {
     gateway:'网关',
     player_url: '播放地址',
     video_url:'视频地址',
+    no_database_connect:'未连接到数据库',
+    please_click:'请点击',
+    to_connect:'连接',
   }
 }

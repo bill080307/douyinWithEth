@@ -43,6 +43,7 @@
           if (info.duration > 0) {
             this.$store.commit('setVideoTime', info.duration);
           }
+          this.fileinfo = ''
           if(info.size){
             this.fileinfo += 'size:'+(info.size/1024/1024).toFixed(2)+'M ';
           }

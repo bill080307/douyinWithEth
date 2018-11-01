@@ -11,9 +11,9 @@
       </p>
     </div>
     <div v-show="!databaseConnect">
-      No database connect. Please click
-      <router-link to="/">Welcome</router-link>
-      to connect.
+      {{ $t("message.no_database_connect") }}. {{ $t("message.please_click") }}
+      <router-link to="/">{{ $t("message.welcome") }}</router-link>
+      {{ $t("message.to_connect") }}
     </div>
   </div>
 </template>
