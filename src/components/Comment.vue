@@ -16,9 +16,8 @@
       </li>
     </ul>
     <div class="newcomment">
-      <textarea v-model="content"></textarea><br>
-      <input type="number" v-model="vidoetime" :max="duration"/>
-      <button @click="publish">publish</button>
+      <textarea v-model="content"></textarea>
+      <button @click="publish">{{ $t("message.publish") }}</button>
     </div>
   </div>
 </template>
@@ -38,7 +37,6 @@
     },
     methods: {
       init() {
-
         this.videoid = this.$store.state.videoId;
         const video = this.$store.state.video;
         video.methods.getVideoPreview(this.videoid).call().then((res) => {
@@ -57,8 +55,9 @@
         });
       },
       publish() {
-        const v=document.getElementById("player");
-        this.vidoetime = Math.floor(v.currentTime*1000);
+        const v = document.getElementById("player");
+        if(v == null)return;
+        this.vidoetime = Math.floor(v.currentTime * 1000);
         if (this.content == '') return;
         if (this.vidoetime > this.$store.state.videoTime) return;
         const video = this.$store.state.video;
@@ -107,5 +106,18 @@
     right: 0;
     height: 80px;
     width: 360px;
+  }
+  .newcomment textarea{
+    width: calc(100% - 90px);
+    min-width: calc(100% - 90px);
+    max-width: calc(100% - 90px);
+    height: 3em;
+    max-height: 100%;
+    float: left;
+  }
+  .newcomment button{
+    width: 80px;
+    height: 3em;
+    float: right;
   }
 </style>
