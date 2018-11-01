@@ -57,6 +57,8 @@
         });
       },
       publish() {
+        const v=document.getElementById("player");
+        this.vidoetime = Math.floor(v.currentTime*1000);
         if (this.content == '') return;
         if (this.vidoetime > this.$store.state.videoTime) return;
         const video = this.$store.state.video;

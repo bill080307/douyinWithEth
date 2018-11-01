@@ -1,6 +1,6 @@
 <template>
   <div class="video">
-    <video :src="videofile" controls="controls"></video>
+    <video :src="videofile" controls="controls" id="player"></video>
     <h1>{{ title }}</h1>
     <div class="videoinfo" v-show="databaseConnect">
       <p class="description">{{ description }}</p>
