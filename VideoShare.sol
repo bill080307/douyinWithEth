@@ -1,17 +1,18 @@
 pragma solidity >=0.4.22 <0.6.0;
 
 contract VideoShare {
-
     struct User {
         string nickname;
         string profile;
         string avatar;
+        uint videoNum;
+        mapping (uint => uint) videos;
     }
+    mapping(address => User) users;
 
     struct Video {
         string title;
         string cover;
-        string videofile;
         string videoinfo;
         string info;
         uint timestamp;
@@ -20,9 +21,14 @@ contract VideoShare {
         uint gratuityNum;
         uint gratuitySum;
         uint lableNum;
+        uint videos;
+        mapping (uint => Videofile) videofiles;
         mapping (uint => Lable) lables;
+        mapping (uint => Gratuity) gratuitys;
         mapping (uint => Comment) comments;
     }
+    uint public videoNum;
+    mapping(uint => Video) videos;
 
     struct Comment {
         string content;
@@ -30,15 +36,36 @@ contract VideoShare {
         uint videotimestamp;
         address author;
     }
-
     struct Lable {
         string lable;
         uint times;
     }
 
-    uint public videoNum;
-    mapping(address => User) users;
-    mapping(uint => Video) videos;
+    struct Gratuity {
+        uint gratuity;
+        address author;
+    }
+
+    struct Videofile {
+        string filename;
+        string info;
+        uint size;
+        uint32 width;
+        uint32 height;
+        uint32 fps;
+    }
+
+    struct Album {
+        string title;
+        string cover;
+        string info;
+        uint videoNum;
+        mapping (uint => uint) videos;
+        address payable author;
+    }
+    uint public albumNum;
+    mapping(uint => Album) albums;
+
 
     function setMyInfo (string memory _nickname, string memory _profile, string memory _avatar) public {
         users[msg.sender] = User(_nickname, _profile, _avatar);
