@@ -59,9 +59,9 @@ contract VideoShare {
         string title;
         string cover;
         string info;
+        address payable author;
         uint videoNum;
         mapping (uint => uint) videos;
-        address payable author;
     }
     uint public albumNum;
     mapping (uint => Album) albums;
@@ -114,11 +114,11 @@ contract VideoShare {
             videos[_videoId].videofiles[_fileId].filePermission = _value;
         }
     }
-    function getVideo (uint _videoId) view public returns (string memory title, string memory cover, string memory videoinfo, string memory info, uint timestamp, address author, uint commentsNum, uint videofiles, uint gratuityNum, uint gratuitySum) {
+    function getVideo (uint _videoId) view public returns (string memory title, string memory cover, string memory videoinfo, string memory info, uint duration, uint timestamp, address author, uint commentsNum, uint gratuityNum, uint gratuitySum) {
         if (videos[_videoId].permission == 0 || msg.sender == videos[_videoId].author) {
             Video storage _video = videos[_videoId];
             for (uint i = 0; i < _video.gratuityNum; i++) gratuitySum += _video.gratuitys[i].gratuity;
-            return (_video.title, _video.cover, _video.videoinfo, _video.info, _video.timestamp, _video.author, _video.commentsNum, _video.fileNum, _video.gratuityNum, gratuitySum);
+            return (_video.title, _video.cover, _video.videoinfo, _video.info, _video.duration, _video.timestamp, _video.author, _video.commentsNum, _video.gratuityNum, gratuitySum);
         }
     }
     function getVideoFile (uint _videoId, uint _fileId) view public returns (string memory filename, string memory fileinfo, uint size, uint32 width, uint32 height, uint32 fps, uint fileNum) {
@@ -170,5 +170,42 @@ contract VideoShare {
     function getGratuitys (uint _videoId, uint _gratuitysId) view public returns (address author, uint gratuity) {
         if (videos[_videoId].permission != 0) return (msg.sender, 0);
         return (videos[_videoId].gratuitys[_gratuitysId].author, videos[_videoId].gratuitys[_gratuitysId].gratuity);
+    }
+
+    function createAlbum (string memory _title, string memory _cover, string memory _info) public returns (uint albumnum) {
+        albums[albumNum++] = Album(_title, _cover, _info, msg.sender, 0);
+        return albumNum - 1;
+    }
+    function editAlbum (uint _albumId, string memory _title, string memory _cover, string memory _info) public {
+        if (msg.sender != albums[_albumId].author) return;
+        albums[_albumId].title = _title;
+        albums[_albumId].cover = _cover;
+        albums[_albumId].info = _info;
+    }
+    function createAlbumVideo (uint _albumId, uint _videoId) public returns (uint videonum) {
+        if (msg.sender != albums[_albumId].author) return (0);
+        albums[_albumId].videos[albums[_albumId].videoNum++] = _videoId;
+        return albums[_albumId].videoNum - 1;
+    }
+    function updateAlbumVideo (uint _albumId, uint _albumvideoId, uint _videoId) public {
+        if (msg.sender != albums[_albumId].author || albums[_albumId].videoNum <= _albumvideoId) return;
+        albums[_albumId].videos[_albumvideoId] = _videoId;
+    }
+    function getAlbum (uint _albumId) view public returns (string memory title, string memory cover, string memory info, address author, uint videonum, uint durationSum) {
+        Album storage _album = albums[_albumId];
+        for (uint i = 0; 0 < _album.videoNum; i++) {
+            if (videos[_album.videos[i]].permission == 0) {
+                durationSum += videos[_album.videos[i]].duration;
+            }
+        }
+        return (_album.title, _album.cover, _album.info, _album.author, _album.videoNum, durationSum);
+    }
+    function getAlbumVideo (uint _albumId, uint _videoId) view public returns (uint videoId, string memory title, string memory cover, string memory videoinfo, string memory info, uint duration, uint timestamp, address author, uint commentsNum, uint gratuityNum, uint gratuitySum) {
+        videoId = albums[_albumId].videos[_videoId];
+        if (videos[videoId].permission == 0 || msg.sender == videos[videoId].author) {
+            Video storage _video = videos[videoId];
+            for (uint i = 0; i < _video.gratuityNum; i++) gratuitySum += _video.gratuitys[i].gratuity;
+            return (videoId, _video.title, _video.cover, _video.videoinfo, _video.info, _video.duration, _video.timestamp, _video.author, _video.commentsNum, _video.gratuityNum, gratuitySum);
+        }
     }
 }
