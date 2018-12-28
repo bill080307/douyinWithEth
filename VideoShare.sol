@@ -8,8 +8,6 @@ contract VideoShare {
         uint videoNums;
         mapping (uint => uint) videos;
     }
-    mapping (address => User) users;
-
     struct Video {
         string title;
         string cover;
@@ -28,9 +26,6 @@ contract VideoShare {
         mapping (uint => Gratuity) gratuitys;
         mapping (uint => Comment) comments;
     }
-    uint public videoNum;
-    mapping (uint => Video) videos;
-
     struct Comment {
         string content;
         uint timestamp;
@@ -63,7 +58,10 @@ contract VideoShare {
         uint videoNum;
         mapping (uint => uint) videos;
     }
+    uint public videoNum;
     uint public albumNum;
+    mapping (address => User) users;
+    mapping (uint => Video) videos;
     mapping (uint => Album) albums;
 
     function setMyInfo (string memory _nickname, string memory _profile, string memory _avatar) public {
