@@ -80,7 +80,7 @@ contract VideoShare {
         return (users[_userAdd].nickname, users[_userAdd].profile, users[_userAdd].avatar, users[_userAdd].videoNums);
     }
 
-    function publish (string memory _title, string memory _cover, string memory _videoinfo, string memory _info, uint _duration, string memory _filename, string memory _fileinfo, uint _size, uint32 _width, uint32 _height, uint32 _fps) public returns (uint articleId) {
+    function publish (string memory _title, string memory _cover, string memory _videoinfo, string memory _info, uint _duration, string memory _filename, string memory _fileinfo, uint _size, uint32 _width, uint32 _height, uint32 _fps) public returns (uint videoId) {
         videos[videoNum++] = Video(_title, _cover, _videoinfo, _info, _duration, now, msg.sender, 0, 0, 0, 0, 0);
         videos[videoNum].videofiles[videos[videoNum].fileNum++] = Videofile(_filename, _fileinfo, _size, _width, _height, _fps, 0);
         users[msg.sender].videos[users[msg.sender].videoNums++] = videoNum - 1;
