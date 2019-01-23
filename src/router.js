@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Video from "./views/Video";
+import Userinfo from "./views/Userinfo";
 
 Vue.use(Router)
 
@@ -13,6 +14,11 @@ export default new Router({
       path: '/',
       name: 'video',
       component: Video
+    },
+    {
+      path: '/userinfo',
+      name: 'userinfo',
+      component: Userinfo
     },
     {
       path: '/about',

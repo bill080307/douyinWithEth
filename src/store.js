@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     gateway:'',
     videoShare:null,
+    userAccount:null,
   },
   mutations: {
     setGateWay(state, visible){
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setVideoShare(state, visible){
       state.videoShare = visible
+    },
+    setUserAccount(state, visible){
+      state.userAccount = visible
     },
   },
   actions: {
