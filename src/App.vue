@@ -17,8 +17,9 @@
               <b-dropdown-item href="#">TEST3</b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item to="/about">About</b-nav-item>
-            <b-nav-item-dropdown text="anonymous" right>
-              <b-dropdown-item href="#">Logout</b-dropdown-item>
+            <b-nav-item-dropdown :text="userAccount.nickname" right>
+              <b-dropdown-item to="/userinfo">用户设置</b-dropdown-item>
+              <b-dropdown-item to="/upload">上传</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
 
@@ -30,9 +31,16 @@
 </template>
 <script>
   import Axios from 'axios'
+  import Web3 from 'web3'
+  import {addressab} from "./utils/assist";
   export default {
     data () {
       return {
+        userAccount:{
+          address:null,
+          nickname:'未登录',
+          avatar: 'QmbApgSEbuX3dQGXornrDNhASxBWEFPgYxGYKzvNxKMhcY'
+        }
       }
     },
     methods: {
@@ -72,23 +80,35 @@
           });
         });
 
-        const Web3 = require('web3');
-        console.log(Web3);
         let web3js;
+        //检查是否开启的插件
         if (typeof web3 !== 'undefined') {
+          //使用插件的ethAPI
           web3js = new Web3(web3.currentProvider);
-          console.log("启用插件");
         } else {
-          console.log("未启用插件");
-          web3js = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/v3/82af007db9b8429eb49f7502e3938acd"));
+          //使用外置的ethAPI
+          web3js = new Web3(new Web3.providers.HttpProvider(config["network"][0]["httpApi"]));
         }
-        console.log(web3js);
-        const videoShare = new web3js.eth.Contract(videoShareAbi, "d334f6e742bef53d92b241ff3b7f719eda1f1d37");
-        console.log(videoShare);
-        videoShare.methods.videoNum().call().then((res) => {
-          console.log(res);
-        });
-
+        //定义合约
+        const videoShare = new web3js.eth.Contract(videoShareAbi, config["network"][0]["contractAddress"]);
+        this.$store.commit('setVideoShare', videoShare);
+        //检测是否登陆
+        web3js.eth.getAccounts((error, result) => {
+          if (result.length > 0) {
+            this.$store.commit('setUserAccount', result[0]);
+            this.userAccount.address=result[0];
+            //获取用户信息
+            videoShare.methods.getUserInfo(this.userAccount.address).call().then((res) => {
+              console.log(res)
+              if(res.nickname!==""){
+                this.userAccount.nickname=res.nickname;
+              } else {
+                this.userAccount.nickname=addressab(this.userAccount.address);
+              }
+              console.log(res);
+            })
+          }
+        })
       }
     },
     created() {

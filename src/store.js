@@ -6,13 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     gateway:'',
-
+    videoShare:null,
   },
   mutations: {
     setGateWay(state, visible){
       state.gateway = visible
     },
-
+    setVideoShare(state, visible){
+      state.videoShare = visible
+    },
   },
   actions: {
 
