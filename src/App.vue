@@ -60,7 +60,7 @@
           const hashToTest = 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a';
           const hashString = 'Hello from IPFS Gateway Checker';
           //定义在线的网关列表
-          const gatewayOnline = [];
+          let gatewayOnline = [];
           gateways.forEach((value) => {
             //拼接hash到网关url里
             const gatewayAndHash = value.replace(':hash', hashToTest);
@@ -72,7 +72,7 @@
                 //把在线的网关添加到列表
                 gatewayOnline.push(url);
                 //把第一个返回的网关记录到全局变量中。
-                if (this.$store.state.gateway == '') this.$store.commit('setGateWay', url);
+                if (this.$store.state.gateway === '') this.$store.commit('setGateWay', url);
               }
             }).catch((err) => {
               //捕获到异常，无需处理
@@ -99,7 +99,7 @@
             this.userAccount.address=result[0];
             //获取用户信息
             videoShare.methods.getUserInfo(this.userAccount.address).call().then((res) => {
-              console.log(res)
+              console.log(res);
               if(res.nickname!==""){
                 this.userAccount.nickname=res.nickname;
               } else {
@@ -108,7 +108,37 @@
               console.log(res);
             })
           }
-        })
+        });
+        //创建一个ipfs节点
+        const ipfsNode = new window.Ipfs({
+          // TODO fix issue with persistance
+          repo: '/ipfs-' + Math.random(),
+          config: {
+            Addresses: {
+              Swarm: [
+                '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star/'
+              ]
+            }
+          },
+          EXPERIMENTAL: {
+            pubsub: true
+          }
+        });
+        this.$store.commit('setIpfsNode', ipfsNode);
+          ipfsNode.once('ready', () => {
+            console.log("ipfs node ready.");
+            //每隔10秒输出一下连上的ipfs节点的数量
+            setInterval(() => {
+                  ipfsNode.swarm.peers((err, peerInfos) => {
+                      if (err) {
+                          throw err
+                      }
+                      if (peerInfos.length > 0) {
+                        console.log(peerInfos.length+" ipfs node Connect.");
+                      }
+                  })
+              }, 10000)
+          })
       }
     },
     created() {

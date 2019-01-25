@@ -8,6 +8,7 @@ export default new Vuex.Store({
     gateway:'',
     videoShare:null,
     userAccount:null,
+    ipfsNode:null,
   },
   mutations: {
     setGateWay(state, visible){
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setUserAccount(state, visible){
       state.userAccount = visible
+    },
+    setIpfsNode(state, visible){
+      state.ipfsNode = visible
     },
   },
   actions: {
