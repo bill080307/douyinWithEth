@@ -105,7 +105,6 @@
               } else {
                 this.userAccount.nickname=addressab(this.userAccount.address);
               }
-              console.log(res);
             })
           }
         });
