@@ -10,7 +10,7 @@
             <b-input-group>
               <b-form-file v-model="videofile" accept="video/*" :state="Boolean(videofile)" placeholder="选择视频"></b-form-file>
               <b-input-group-append>
-                <b-btn variant="success" @click="upload">上传</b-btn>
+                <b-btn variant="success" @click="uploadfile">上传</b-btn>
               </b-input-group-append>
             </b-input-group>
             <b-btn variant="outline-success" @click="readinfo">视频已经加载，读取视频信息</b-btn>
@@ -33,30 +33,37 @@
           </b-tab>
           <b-tab title="封面" >
             <br>
-            <b-img class="cover" :src="coversrc"></b-img>
+            <p>
+              <b-img class="cover" rounded :src="coversrc"></b-img>
+            </p>
             <b-button-group vertical>
               <b-form-file v-model="coverfile" :state="Boolean(coverfile)" placeholder="选择封面"></b-form-file>
               <b-button variant="warning" @click="uploadCover">上传封面</b-button>
             </b-button-group>
           </b-tab>
-          <b-tab title="视频信息" >
+          <b-tab title="文件信息" >
             <br>
             <b-alert variant="info" show>推荐使用 ffprobe -v quiet -print_format json -show_streams -i videofile.mp4</b-alert>
             <b-form-textarea id="videoinfo"
                              v-model="videoinfo"
                              placeholder="视频信息"
-                             :rows="3"
-                             :max-rows="6">
+                             :rows="6"
+                             :max-rows="10">
             </b-form-textarea>
-            <b-form-group
-                    label="视频信息"
-                    label-for="videoinfo">
-            </b-form-group>
+          </b-tab>
+          <b-tab title="视频信息" >
+            <br>
+            <b-alert variant="info" show>推荐使用第三方工具生成</b-alert>
+            <b-form-textarea id="fileinfo"
+                             v-model="fileinfo"
+                             placeholder="文件信息"
+                             :rows="8"
+                             :max-rows="10">
+            </b-form-textarea>
           </b-tab>
         </b-tabs>
       </b-col>
       <b-col>
-
         <b-form-group
                 label="标题"
                 label-for="title">
@@ -65,7 +72,12 @@
         <b-form-group
                 label="视频简介"
                 label-for="info">
-          <b-form-input id="info" v-model="info"></b-form-input>
+          <b-form-textarea id="info"
+                           v-model="info"
+                           placeholder="简介"
+                           :rows="5"
+                           :max-rows="10">
+          </b-form-textarea>
         </b-form-group>
         <b-row>
           <b-col>
@@ -106,21 +118,11 @@
         </b-row>
       </b-col>
     </b-row>
-    <b-form-group
-            label="封面"
-            label-for="cover">
-      <b-form-input id="cover" v-model="cover"></b-form-input>
-    </b-form-group>
-    <b-form-group
-            label="文件索引"
-            label-for="filename">
-      <b-form-input id="filename" v-model="filename"></b-form-input>
-    </b-form-group>
-    <b-form-group
-            label="文件信息"
-            label-for="fileinfo">
-      <b-form-input id="fileinfo" v-model="fileinfo"></b-form-input>
-    </b-form-group>
+    <b-row>
+      <b-col>
+        <b-button variant="success" @click="upload">已确认信息，完成上传</b-button>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -145,7 +147,7 @@ export default {
     }
   },
   methods: {
-    upload(){
+    uploadfile(){
       //获取ipfs节点
       const ipfsNode = this.$store.state.ipfsNode;
       //new一个文件对象
@@ -190,6 +192,22 @@ export default {
           console.log(response);
         })
       }
+    },
+    upload(){
+      //获取合约实例
+      const videoShare = this.$store.state.videoShare;
+      const userAccount = this.$store.state.userAccount
+      console.log(videoShare);
+      //setMyInfo的调用方式需要传入以上3个值，还有send中传入用户自己的地址，价格是程序自己计算完成的，不需要输入。
+      videoShare.methods.publish(this.title,this.cover,this.videoinfo,this.info,this.duration,this.filename,this.fileinfo,this.size,this.width,this.height,this.fps)
+              .send({ from: userAccount })
+              .on("receipt", function(receipt) {
+                //返回成功上链的信息
+                alert("上链成功，区块高度："+receipt.blockNumber);
+                console.log(receipt);
+              }).on("error", function(error) {
+        console.log(error);
+      })
     }
   },
   created() {
@@ -203,12 +221,18 @@ export default {
         return this.$store.state.gateway.replace(':hash', this.filename)
       }
     },
+    coversrc() {
+      return this.$store.state.gateway.replace(':hash', this.cover)
+    },
   }
 }
 </script>
 <style>
-#player{
-  width: 100%;
-}
+  #player{
+    width: 100%;
+  }
+  .cover{
+    width: 100%;
+  }
 </style>
 
