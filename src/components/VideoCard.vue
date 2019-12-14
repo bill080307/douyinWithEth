@@ -3,14 +3,17 @@
           :img-src="cover"
           img-top
   >
+
     <b-badge variant="dark" class="duration">{{ duration }}</b-badge>
 <!--    <b-badge variant="primary" class="hd">{{ hd }}</b-badge>-->
-    <b-card-body>
-      <b-card-title>{{ title }}</b-card-title>
-      <b-card-text>
+    <a :href="'/video/'+video.videoID">
+      <b-card-body>
+        <b-card-title>{{ title }}</b-card-title>
+        <b-card-text>
           {{ timestamp }} 👍: {{ gratuityNum }} 🎁: {{ gratuitySum }}
-      </b-card-text>
-    </b-card-body>
+        </b-card-text>
+      </b-card-body>
+    </a>
   </b-card>
 </template>
 
@@ -63,4 +66,7 @@
   /*.hd{*/
   /*   background-color: rgba(0,123,255,0.5);*/
   /* }*/
+  a:hover {
+    text-decoration: none;
+  }
 </style>

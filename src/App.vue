@@ -74,6 +74,7 @@
           userGratuitySum: 14755
         },
         videoCard: {
+          videoID: 0,
           videoHash: 'QmVNAuckPWSyLfJdEAPPt8WUnJCNvowZZ1pWHcy37w4do6',
           duration: 6396000,
           timestamp: 1576336248,
