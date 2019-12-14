@@ -23,17 +23,25 @@
       </b-navbar>
     </div>
     <b-container>
-      <b-row class="justify-content-center">
-        <b-col cols="6">
-          <UserCard></UserCard>
-        </b-col>
-      </b-row>
       <b-row>
         <b-col cols="9">
-          <UserCard></UserCard>
         </b-col>
         <b-col cols="3">
           <UserCard :user="userCard"></UserCard>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="3">
+          <VideoCard :video="videoCard"></VideoCard>
+        </b-col>
+        <b-col cols="3">
+          <VideoCard :video="videoCard"></VideoCard>
+        </b-col>
+        <b-col cols="3">
+          <VideoCard :video="videoCard"></VideoCard>
+        </b-col>
+        <b-col cols="3">
+          <VideoCard :video="videoCard"></VideoCard>
         </b-col>
       </b-row>
     </b-container>
@@ -42,9 +50,10 @@
 <script>
   import Axios from 'axios'
   import UserCard from "./components/UserCard";
+  import VideoCard from "./components/VideoCard";
   export default {
     name: "App",
-    components: {UserCard},
+    components: {VideoCard, UserCard},
     data(){
       return {
         global:{
@@ -63,6 +72,16 @@
           userAlbumNum: 0,
           userGratuityCount: 15,
           userGratuitySum: 14755
+        },
+        videoCard: {
+          videoHash: 'QmVNAuckPWSyLfJdEAPPt8WUnJCNvowZZ1pWHcy37w4do6',
+          duration: 6396000,
+          timestamp: 1576336248,
+          author: '0xqweqweqwedsadsad',
+          commentsNum: 123,
+          vlableNum: 42,
+          gratuityNum: 7,
+          gratuitySum: 624752,
         }
       }
     },

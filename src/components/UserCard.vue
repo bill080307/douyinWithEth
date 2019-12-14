@@ -43,7 +43,6 @@
         this.avatar = userinfo.avatar;
         this.username = userinfo.username;
         this.description = userinfo.description;
-        console.log(user);
       }
     },
     created() {

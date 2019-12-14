@@ -117,7 +117,7 @@ contract DikTok {
         videos[_videoId].language = _languageID;
     }
 
-    function getVideo (uint _videoId) view public returns (string memory, uint duration, uint timestamp, address author, uint commentsNum, uint vlableNum , uint gratuityNum, uint gratuitySum) {
+    function getVideo (uint _videoId) view public returns (string memory videoHash, uint duration, uint timestamp, address author, uint commentsNum, uint vlableNum , uint gratuityNum, uint gratuitySum) {
         require(videos[_videoId].permission == 0 || msg.sender == videos[_videoId].author);
         Video storage _video = videos[_videoId];
         for (uint i = 0; i < _video.gratuityNum; i++) gratuitySum += _video.gratuitys[i].gratuity;

@@ -1,7 +1,11 @@
-export function formatDate(inputTime) {
-  var date = new Date();
+export function formatDate(inputTime, format = 'standard') {
+  let date = new Date();
   date.setTime(inputTime * 1000);
-  var y = date.getFullYear();
+  let y = date.getFullYear();
+  if(format === 'short'){
+    y = y % 100;
+    y = y < 10 ? ('0' + y) : y;
+  }
   var m = date.getMonth() + 1;
   m = m < 10 ? ('0' + m) : m;
   var d = date.getDate();
@@ -12,6 +16,9 @@ export function formatDate(inputTime) {
   var second = date.getSeconds();
   minute = minute < 10 ? ('0' + minute) : minute;
   second = second < 10 ? ('0' + second) : second;
+  if(format === 'short'){
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute;
+  }
   return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 }
 
@@ -26,6 +33,24 @@ export function formatvideotime(inputTime) {
 export function addressab(address) {
     return address.substr(0,6)+'...'+address.substr(38,4);
 }
+
+export function formatdurationtime(inputTime) {
+  let Millisecond = inputTime%1000;
+  inputTime = Math.floor(inputTime / 1000);
+  let second = inputTime % 60;
+  inputTime = Math.floor(inputTime / 60);
+  if(inputTime < 60){
+    return inputTime+':'+second;
+  }
+  let minute = inputTime % 60;
+  inputTime = Math.floor(inputTime / 60);
+  return inputTime+':'+minute+':'+second;
+}
+
+export function formatETH(eth) {
+  return Math.floor(eth / 1e+8).toFixed(2);
+}
+
 // 日期格式化 'yyyy-MM-dd hh:mm'
 // export function formatDate(time, fmt,isDate = false) {
 //   let date
