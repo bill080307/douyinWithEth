@@ -162,7 +162,7 @@ contract DikTok {
         videos[_videoId].comments[_commentId].author = msg.sender;
     }
 
-    function getVideoComment (uint _videoId, uint _commentId) view public returns (string memory, uint timestamp, uint videotimestamp, address author) {
+    function getVideoComment (uint _videoId, uint _commentId) view public returns (string memory contentHash, uint timestamp, uint videotimestamp, address author) {
         require(videos[_videoId].permission == 0 || videos[_videoId].author == msg.sender);
         return (videos[_videoId].comments[_commentId].content_hash, videos[_videoId].comments[_commentId].timestamp, videos[_videoId].comments[_commentId].videotimestamp, videos[_videoId].comments[_commentId].author);
     }

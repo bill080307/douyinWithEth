@@ -34,11 +34,14 @@ export function addressab(address) {
     return address.substr(0,6)+'...'+address.substr(38,4);
 }
 
-export function formatdurationtime(inputTime) {
+export function formatdurationtime(inputTime, format = 'standard') {
   let Millisecond = inputTime%1000;
   inputTime = Math.floor(inputTime / 1000);
   let second = inputTime % 60;
   inputTime = Math.floor(inputTime / 60);
+  if(format==='millisecond'){
+    return inputTime+':'+second+'.'+Millisecond;
+  }
   if(inputTime < 60){
     return inputTime+':'+second;
   }

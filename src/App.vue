@@ -44,6 +44,11 @@
           <VideoCard :video="videoCard"></VideoCard>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col cols="3">
+          <CommentCard :comment="CommentCard" :user="userCard"></CommentCard>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -51,9 +56,10 @@
   import Axios from 'axios'
   import UserCard from "./components/UserCard";
   import VideoCard from "./components/VideoCard";
+  import CommentCard from "./components/CommentCard";
   export default {
     name: "App",
-    components: {VideoCard, UserCard},
+    components: {CommentCard, VideoCard, UserCard},
     data(){
       return {
         global:{
@@ -83,6 +89,12 @@
           vlableNum: 42,
           gratuityNum: 7,
           gratuitySum: 624752,
+        },
+        CommentCard: {
+          contentHash: 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a',
+          timestamp: 1576336248,
+          videotimestamp: 6396123,
+          author: '0xqweqweqwedsadsad'
         }
       }
     },
