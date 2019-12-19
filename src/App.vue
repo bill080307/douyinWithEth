@@ -45,6 +45,9 @@
         </b-col>
       </b-row>
       <b-row>
+        <b-col cols="9">
+          <VideoPlayer :video="videoCard"></VideoPlayer>
+        </b-col>
         <b-col cols="3">
           <CommentCard :comment="CommentCard" :user="userCard"></CommentCard>
         </b-col>
@@ -57,9 +60,10 @@
   import UserCard from "./components/UserCard";
   import VideoCard from "./components/VideoCard";
   import CommentCard from "./components/CommentCard";
+  import VideoPlayer from "./components/VideoPlayer";
   export default {
     name: "App",
-    components: {CommentCard, VideoCard, UserCard},
+    components: {VideoPlayer, CommentCard, VideoCard, UserCard},
     data(){
       return {
         global:{
@@ -95,7 +99,7 @@
           timestamp: 1576336248,
           videotimestamp: 6396123,
           author: '0xqweqweqwedsadsad'
-        }
+        },
       }
     },
     methods:{
