@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body class="overflow-hidden" >
+  <b-card no-body class="overflow-hidden user-card" >
     <a :href="'/user/'+user.userAddress">
       <b-row no-gutters>
         <b-col md="3">
@@ -57,5 +57,10 @@
   }
   a:hover {
     text-decoration: none;
+  }
+  .user-card{
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
   }
 </style>

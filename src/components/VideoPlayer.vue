@@ -1,5 +1,5 @@
 <template>
-  <b-card>
+  <b-card class="video-card">
     <video id="player" controls autoplay class="video-js vjs-big-play-centered">
     </video>
     <b-row>
@@ -120,5 +120,10 @@
 <style scoped>
   .card-body{
     padding: 0.2rem;
+  }
+  .video-card{
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
   }
 </style>

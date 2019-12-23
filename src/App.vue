@@ -24,13 +24,6 @@
     </div>
     <b-container>
       <b-row>
-        <b-col cols="9">
-        </b-col>
-        <b-col cols="3">
-          <UserCard :user="userCard"></UserCard>
-        </b-col>
-      </b-row>
-      <b-row>
         <b-col cols="3">
           <VideoCard :video="videoCard"></VideoCard>
         </b-col>
@@ -49,7 +42,9 @@
           <VideoPlayer :video="videoCard"></VideoPlayer>
         </b-col>
         <b-col cols="3">
+          <UserCard :user="userCard"></UserCard>
           <CommentCard :comment="CommentCard" :user="userCard"></CommentCard>
+          <FunctionCard></FunctionCard>
         </b-col>
       </b-row>
     </b-container>
@@ -61,9 +56,10 @@
   import VideoCard from "./components/VideoCard";
   import CommentCard from "./components/CommentCard";
   import VideoPlayer from "./components/VideoPlayer";
+  import FunctionCard from "./components/FunctionCard";
   export default {
     name: "App",
-    components: {VideoPlayer, CommentCard, VideoCard, UserCard},
+    components: {FunctionCard, VideoPlayer, CommentCard, VideoCard, UserCard},
     data(){
       return {
         global:{

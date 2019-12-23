@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body class="overflow-hidden">
+  <b-card no-body class="overflow-hidden comment-card">
     <b-tooltip target="tooltip-target-1" triggers="hover">
       <UserCard :user="user"></UserCard>
     </b-tooltip>
@@ -66,5 +66,10 @@
 <style scoped>
   .card-body{
     padding: 0.2rem;
+  }
+  .comment-card{
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
   }
 </style>
