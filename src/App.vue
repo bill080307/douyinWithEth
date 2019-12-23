@@ -23,43 +23,17 @@
       </b-navbar>
     </div>
     <b-container>
-      <b-row>
-        <b-col cols="3">
-          <VideoCard :video="videoCard"></VideoCard>
-        </b-col>
-        <b-col cols="3">
-          <VideoCard :video="videoCard"></VideoCard>
-        </b-col>
-        <b-col cols="3">
-          <VideoCard :video="videoCard"></VideoCard>
-        </b-col>
-        <b-col cols="3">
-          <VideoCard :video="videoCard"></VideoCard>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="9">
-          <VideoPlayer :video="videoCard"></VideoPlayer>
-        </b-col>
-        <b-col cols="3">
-          <UserCard :user="userCard"></UserCard>
-          <CommentCard :comment="CommentCard" :user="userCard"></CommentCard>
-          <FunctionCard></FunctionCard>
-        </b-col>
-      </b-row>
+      <h1 v-if="!connectEth">未连接 ETH</h1>
+      <router-view></router-view>
     </b-container>
   </div>
 </template>
 <script>
   import Axios from 'axios'
-  import UserCard from "./components/UserCard";
-  import VideoCard from "./components/VideoCard";
-  import CommentCard from "./components/CommentCard";
-  import VideoPlayer from "./components/VideoPlayer";
-  import FunctionCard from "./components/FunctionCard";
+  import Web3 from "web3";
+  import {uniqueArr} from "./utils/assist";
   export default {
     name: "App",
-    components: {FunctionCard, VideoPlayer, CommentCard, VideoCard, UserCard},
     data(){
       return {
         global:{
@@ -70,32 +44,7 @@
           },
           extend:[]
         },
-        // example
-        userCard: {
-          userAddress: '0xqweqweqwedsadsad',
-          userHash: 'QmPnXvWUuvAEchE1SxgpXTUXhQfUKqXgZ5XJZfxrUsP94R',
-          userVideoNums: 2,
-          userAlbumNum: 0,
-          userGratuityCount: 15,
-          userGratuitySum: 14755
-        },
-        videoCard: {
-          videoID: 0,
-          videoHash: 'QmVNAuckPWSyLfJdEAPPt8WUnJCNvowZZ1pWHcy37w4do6',
-          duration: 6396000,
-          timestamp: 1576336248,
-          author: '0xqweqweqwedsadsad',
-          commentsNum: 123,
-          vlableNum: 42,
-          gratuityNum: 7,
-          gratuitySum: 624752,
-        },
-        CommentCard: {
-          contentHash: 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a',
-          timestamp: 1576336248,
-          videotimestamp: 6396123,
-          author: '0xqweqweqwedsadsad'
-        },
+        connectEth: false,
       }
     },
     methods:{
@@ -104,7 +53,70 @@
           this.global = res.data;
         }).catch((err)=>{
           console.log(err)
-        })
+        });
+        let web3js;
+        //检查是否开启的插件
+        if (typeof web3 !== 'undefined') {
+          //使用插件的ethAPI
+          web3js = new Web3(web3.currentProvider);
+          this.connectEth = true;
+        } else {
+          //使用外置的ethAPI
+          // web3js = new Web3(new Web3.providers.HttpProvider(config["network"][0]["httpApi"]));
+        }
+        if(this.connectEth){
+          //定义合约
+          const dikTok = new web3js.eth.Contract(DikTok_Abi, config["network"][0]["contractAddress"]);
+          this.$store.commit('setdikTok', dikTok);
+          console.log(dikTok)
+        }
+
+        //先get一下我下载下来的公共网关列表
+        let gateways = await Axios.get('./gateways.json').then((res)=>{
+          return res.data;
+        });
+        let olgateways = await Axios.get('https://ipfs.github.io/public-gateway-checker/gateways.json').then((res)=>{
+          return res.data;
+        });
+        const host1 = window.location.host;
+        const host2 = document.domain;
+        gateways = [
+          "http://127.0.0.1:8080/ipfs/:hash",
+          "http://" + host1 + "/ipfs/:hash",
+          "http://" + host2 + ":8080/ipfs/:hash"
+        ].concat(gateways);
+        gateways = gateways.concat(olgateways);
+        gateways = uniqueArr(gateways);
+
+        //定义用于测试的hash和文本
+        const hashToTest = 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a';
+        const hashString = 'Hello from IPFS Gateway Checker';
+        let gatewayOnline = [];
+        let num = gateways.length;
+        gateways.forEach((value) => {
+          //拼接hash到网关url里
+          const gatewayAndHash = value.replace(':hash', hashToTest);
+          try {
+            Axios.get(gatewayAndHash, {timeout: 5000}).then((res) => {
+              if (res.data.trim() === hashString.trim()) {
+                gatewayOnline.push(value);
+              }
+              num --;
+              if(num === 0)saveGateway(gatewayOnline);
+            }).catch((err) => {
+              num --;
+              if(num === 0)saveGateway(gatewayOnline);
+            });
+          }catch (e) {
+            num --;
+            if(num === 0)saveGateway(gatewayOnline);
+          }
+        });
+        const saveGateway = (gateways)=>{
+            if(gateways.length < 1)return;
+            this.$store.commit('setGateWay', gateways[0]);
+            localStorage.setItem('GateWays', JSON.stringify(gateways));
+        };
       },
     },
     created() {

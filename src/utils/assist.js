@@ -53,6 +53,13 @@ export function formatdurationtime(inputTime, format = 'standard') {
 export function formatETH(eth) {
   return Math.floor(eth / 1e+8).toFixed(2);
 }
+export function uniqueArr(array) {
+  let n = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array.indexOf(array[i]) === i) n.push(array[i]);
+  }
+  return n;
+}
 
 // 日期格式化 'yyyy-MM-dd hh:mm'
 // export function formatDate(time, fmt,isDate = false) {

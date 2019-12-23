@@ -5,15 +5,15 @@ import Video from "./views/Video";
 import Userinfo from "./views/Userinfo";
 import Upload from "./views/Upload";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'video',
+      path: '/video/:id',
+      name: 'Video',
       component: Video
     },
     {

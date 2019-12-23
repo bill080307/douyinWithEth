@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     gateway:'',
-    videoShare:null,
+    diktok:null,
     userAccount:null,
     ipfsNode:null,
   },
@@ -14,8 +14,8 @@ export default new Vuex.Store({
     setGateWay(state, visible){
       state.gateway = visible
     },
-    setVideoShare(state, visible){
-      state.videoShare = visible
+    setDikTok(state, visible){
+      state.dikTok = visible
     },
     setUserAccount(state, visible){
       state.userAccount = visible

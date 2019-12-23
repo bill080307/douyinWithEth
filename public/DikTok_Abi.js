@@ -319,12 +319,27 @@ const DikTok_Abi = [
         "outputs": [
             {
                 "internalType": "string",
-                "name": "",
+                "name": "userHash",
                 "type": "string"
             },
             {
                 "internalType": "uint256",
-                "name": "videoNums",
+                "name": "userVideoNums",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "userAlbumNum",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "userGratuityCount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "userGratuitySum",
                 "type": "uint256"
             }
         ],
@@ -345,7 +360,7 @@ const DikTok_Abi = [
         "outputs": [
             {
                 "internalType": "string",
-                "name": "",
+                "name": "videoHash",
                 "type": "string"
             },
             {
@@ -406,7 +421,7 @@ const DikTok_Abi = [
         "outputs": [
             {
                 "internalType": "string",
-                "name": "",
+                "name": "contentHash",
                 "type": "string"
             },
             {
