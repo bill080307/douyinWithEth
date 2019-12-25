@@ -2,11 +2,11 @@
   <div>
     <b-row>
       <b-col cols="9">
-        <VideoPlayer :video="videoCard"></VideoPlayer>
+        <VideoPlayer :video="videoData"></VideoPlayer>
       </b-col>
       <b-col cols="3">
-        <UserCard :user="userCard"></UserCard>
-        <CommentCard :comment="CommentCard" :user="userCard"></CommentCard>
+        <UserCard :user="userData"></UserCard>
+        <CommentCard :comment="comment" :user="userData" v-for="comment in CommentData"></CommentCard>
         <FunctionCard></FunctionCard>
       </b-col>
     </b-row>
@@ -24,37 +24,44 @@
     data(){
       return {
         videoId :0,
-        userCard: {
-          userAddress: '0xqweqweqwedsadsad',
-          userHash: 'QmPnXvWUuvAEchE1SxgpXTUXhQfUKqXgZ5XJZfxrUsP94R',
-          userVideoNums: 2,
+        videoData: {
+          videoID: 0,
+          videoHash: '',
+          duration: 0,
+          timestamp: 0,
+          author: '',
+          commentsNum: 0,
+          vlableNum: 0,
+          gratuityNum: 0,
+          gratuitySum: 0,
+        },
+        userData: {
+          userAddress: '',
+          userHash: '',
+          userVideoNums: 0,
           userAlbumNum: 0,
-          userGratuityCount: 15,
-          userGratuitySum: 14755
+          userGratuityCount: 0,
+          userGratuitySum: 0
         },
-        videoCard: {
-          videoID: 2,
-          videoHash: 'QmVNAuckPWSyLfJdEAPPt8WUnJCNvowZZ1pWHcy37w4do6',
-          duration: 6396000,
-          timestamp: 1576336248,
-          author: '0xqweqweqwedsadsad',
-          commentsNum: 123,
-          vlableNum: 42,
-          gratuityNum: 7,
-          gratuitySum: 624752,
-        },
-        CommentCard: {
-          contentHash: 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a',
-          timestamp: 1576336248,
-          videotimestamp: 6396123,
-          author: '0xqweqweqwedsadsad'
-        },
+        CommentData: [],
       }
     },
     methods:{
-      init(){
+      async init(){
         this.videoId = this.$route.params.id;
-        console.log(videoId);
+        const dikTok = this.$store.state.dikTok;
+        this.videoData = await dikTok.methods.getVideo(this.videoId).call().then((res)=>{return res});
+        this.videoData['videoID'] = this.videoId;
+
+        this.userData = await dikTok.methods.getUserInfo(this.videoData.author).call().then((res)=>{return res});
+        this.userData['userAddress'] = this.videoData.author;
+
+        for (let i = 0; i < this.videoData.commentsNum && i < 6; i++) {
+          const comment = await dikTok.methods.getVideoComment(this.videoId, i).call().then((res)=>{return res});
+          this.CommentData.append({"author":this.videoData.author}.concat(comment))
+        }
+
+        console.log(this.userData);
       },
     },
     created() {

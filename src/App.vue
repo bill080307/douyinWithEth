@@ -67,8 +67,8 @@
         if(this.connectEth){
           //定义合约
           const dikTok = new web3js.eth.Contract(DikTok_Abi, config["network"][0]["contractAddress"]);
-          this.$store.commit('setdikTok', dikTok);
-          console.log(dikTok)
+          this.$store.commit('setDikTok', dikTok);
+          console.log(dikTok);
         }
 
         //先get一下我下载下来的公共网关列表
