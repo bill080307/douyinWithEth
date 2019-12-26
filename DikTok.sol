@@ -124,6 +124,15 @@ contract DikTok {
         return (_video.video_hash, _video.duration, _video.timestamp, _video.author, _video.commentsNum, _video.lableNum, _video.gratuityNum, gratuitySum);
     }
 
+    function getUserVideo(address _userAdd, uint _userVideoId) view public returns (string memory videoHash, uint videoId, uint duration, uint timestamp, uint commentsNum, uint vlableNum , uint gratuityNum, uint gratuitySum) {
+        require(users[_userAdd].videoNums > _userVideoId);
+        uint _vid = users[_userAdd].videos[_userVideoId];
+        require(videos[_vid].permission == 0 || msg.sender == videos[_vid].author);
+        Video storage _video = videos[_vid];
+        for (uint i = 0; i < _video.gratuityNum; i++) gratuitySum += _video.gratuitys[i].gratuity;
+        return (_video.video_hash, _vid, _video.duration, _video.timestamp, _video.commentsNum, _video.lableNum, _video.gratuityNum, gratuitySum);
+    }
+
     function newLables (string memory _lable) onlyOwner() public {
         lables[lableNum++] = _lable;
     }

@@ -351,6 +351,67 @@ const DikTok_Abi = [
         "constant": true,
         "inputs": [
             {
+                "internalType": "address",
+                "name": "_userAdd",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_userVideoId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getUserVideo",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "videoHash",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "videoId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "duration",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "timestamp",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "commentsNum",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "vlableNum",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "gratuityNum",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "gratuitySum",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
                 "internalType": "uint256",
                 "name": "_videoId",
                 "type": "uint256"
