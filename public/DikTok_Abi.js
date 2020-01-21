@@ -1,12 +1,10 @@
 const DikTok_Abi = [
     {
         "inputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "constructor"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -21,12 +19,10 @@ const DikTok_Abi = [
         ],
         "name": "addLable",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [],
         "name": "albumNum",
         "outputs": [
@@ -36,12 +32,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -66,12 +60,10 @@ const DikTok_Abi = [
         ],
         "name": "changeCommen",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "string",
@@ -87,12 +79,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -113,12 +103,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -133,12 +121,10 @@ const DikTok_Abi = [
         ],
         "name": "editAlbum",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -169,12 +155,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -196,7 +180,7 @@ const DikTok_Abi = [
             },
             {
                 "internalType": "string",
-                "name": "",
+                "name": "videoHash",
                 "type": "string"
             },
             {
@@ -235,12 +219,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -266,12 +248,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -287,12 +267,10 @@ const DikTok_Abi = [
                 "type": "string"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [],
         "name": "getLanguage",
         "outputs": [
@@ -302,12 +280,10 @@ const DikTok_Abi = [
                 "type": "string"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "address",
@@ -343,12 +319,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "address",
@@ -404,12 +378,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -460,12 +432,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -501,12 +471,10 @@ const DikTok_Abi = [
                 "type": "address"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -528,7 +496,7 @@ const DikTok_Abi = [
             },
             {
                 "internalType": "string",
-                "name": "",
+                "name": "hash",
                 "type": "string"
             },
             {
@@ -537,12 +505,10 @@ const DikTok_Abi = [
                 "type": "address"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [],
         "name": "lableNum",
         "outputs": [
@@ -552,12 +518,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -577,12 +541,10 @@ const DikTok_Abi = [
         ],
         "name": "makeComment",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "string",
@@ -592,12 +554,10 @@ const DikTok_Abi = [
         ],
         "name": "newLables",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [],
         "name": "owner",
         "outputs": [
@@ -607,12 +567,10 @@ const DikTok_Abi = [
                 "type": "address"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "string",
@@ -638,12 +596,10 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -653,12 +609,10 @@ const DikTok_Abi = [
         ],
         "name": "reward",
         "outputs": [],
-        "payable": true,
         "stateMutability": "payable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -673,12 +627,10 @@ const DikTok_Abi = [
         ],
         "name": "setLables",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "string",
@@ -688,12 +640,10 @@ const DikTok_Abi = [
         ],
         "name": "setLanguage",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "string",
@@ -703,12 +653,10 @@ const DikTok_Abi = [
         ],
         "name": "setMyProfile",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -733,12 +681,10 @@ const DikTok_Abi = [
         ],
         "name": "setVideo",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -753,12 +699,10 @@ const DikTok_Abi = [
         ],
         "name": "setVideoPermission",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": false,
         "inputs": [
             {
                 "internalType": "uint256",
@@ -778,12 +722,10 @@ const DikTok_Abi = [
         ],
         "name": "updateAlbumVideo",
         "outputs": [],
-        "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": true,
         "inputs": [],
         "name": "videoNum",
         "outputs": [
@@ -793,7 +735,6 @@ const DikTok_Abi = [
                 "type": "uint256"
             }
         ],
-        "payable": false,
         "stateMutability": "view",
         "type": "function"
     }

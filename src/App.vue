@@ -69,6 +69,11 @@
           const dikTok = new web3js.eth.Contract(DikTok_Abi, config["network"][0]["contractAddress"]);
           this.$store.commit('setDikTok', dikTok);
           console.log(dikTok);
+          //检测是否登陆
+          let account = await web3js.eth.getAccounts();
+          if(account.length > 0){
+            this.$store.commit('setUserAccount', account[0]);
+          }
         }
 
         //先get一下我下载下来的公共网关列表

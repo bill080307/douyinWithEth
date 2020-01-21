@@ -152,7 +152,7 @@ contract DikTok {
         _video.lables[_video.lableNum++] = Lable(_lableID, msg.sender);
     }
 
-    function getVideoLable (uint _videoId, uint _lableId) view public returns (uint lableID, string memory, address author) {
+    function getVideoLable (uint _videoId, uint _lableId) view public returns (uint lableID, string memory hash, address author) {
         require(videos[_videoId].permission == 0 && _lableId < lableNum);
         Lable storage _lable = videos[_videoId].lables[_lableId];
         return (_lable.lable, lables[_lable.lable], _lable.author);
@@ -214,7 +214,7 @@ contract DikTok {
         }
         return (_album.album_hash, _album.author, _album.videoNum, durationSum);
     }
-    function getAlbumVideo (uint _albumId, uint _videoId) view public returns (uint videoId, string memory, uint duration, uint timestamp, address author, uint commentsNum, uint vlableNum , uint gratuityNum, uint gratuitySum) {
+    function getAlbumVideo (uint _albumId, uint _videoId) view public returns (uint videoId, string memory videoHash, uint duration, uint timestamp, address author, uint commentsNum, uint vlableNum , uint gratuityNum, uint gratuitySum) {
         videoId = albums[_albumId].videos[_videoId];
         require(videos[videoId].permission == 0 || msg.sender == videos[videoId].author);
         Video storage _video = videos[videoId];
