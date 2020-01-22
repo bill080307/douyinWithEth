@@ -9,6 +9,8 @@ export default new Vuex.Store({
     dikTok:null,
     userAccount:null,
     ipfsNode:null,
+    isconnectEth: false,
+    isloginEth:false
   },
   mutations: {
     setGateWay(state, visible){
@@ -22,6 +24,12 @@ export default new Vuex.Store({
     },
     setIpfsNode(state, visible){
       state.ipfsNode = visible
+    },
+    setIsconnectEth(state, visible){
+      state.isconnectEth = visible
+    },
+    setIsloginEth(state, visible){
+      state.isloginEth = visible
     },
   },
   actions: {

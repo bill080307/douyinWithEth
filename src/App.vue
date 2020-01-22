@@ -29,9 +29,10 @@
   </div>
 </template>
 <script>
-  import Axios from 'axios'
+  import Axios from 'axios';
   import Web3 from "web3";
-  import {uniqueArr} from "./utils/assist";
+  import Ipfs from 'ipfs';
+  import {addressab, uniqueArr} from "./utils/assist";
   export default {
     name: "App",
     data(){
@@ -45,6 +46,9 @@
           extend:[]
         },
         connectEth: false,
+        loginEth: false,
+        jsipfs: null,
+        ipfsSW:0
       }
     },
     methods:{
@@ -56,15 +60,28 @@
         });
         let web3js;
         //检查是否开启的插件
-        if (typeof web3 !== 'undefined') {
-          //使用插件的ethAPI
-          web3js = new Web3(web3.currentProvider);
+        // 新版的方式
+        let web3Provider;
+        if (window.ethereum) {
+          web3Provider = window.ethereum;
+          try {
+            // 请求用户授权
+            await window.ethereum.enable();
+            this.connectEth = true;
+            this.$store.commit('setIsconnectEth', true);
+          } catch (error) {
+            // 用户不授权时
+            console.error("User denied account access")
+          }
+        } else if (window.web3) {   // 老版 MetaMask Legacy dapp browsers...
+          web3Provider = window.web3.currentProvider;
           this.connectEth = true;
+          this.$store.commit('setIsconnectEth', true);
         } else {
-          //使用外置的ethAPI
-          // web3js = new Web3(new Web3.providers.HttpProvider(config["network"][0]["httpApi"]));
+          // web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
         }
         if(this.connectEth){
+          web3js = new Web3(web3Provider);//web3js就是你需要的web3实例
           //定义合约
           const dikTok = new web3js.eth.Contract(DikTok_Abi, config["network"][0]["contractAddress"]);
           this.$store.commit('setDikTok', dikTok);
@@ -73,6 +90,8 @@
           let account = await web3js.eth.getAccounts();
           if(account.length > 0){
             this.$store.commit('setUserAccount', account[0]);
+            this.loginEth = true;
+            this.$store.commit('setIsloginEth', true);
           }
         }
 
@@ -122,6 +141,26 @@
             this.$store.commit('setGateWay', gateways[0]);
             localStorage.setItem('GateWays', JSON.stringify(gateways));
         };
+        if(this.loginEth){
+          //创建一个ipfs节点
+          const IPFS = require('ipfs');
+          this.jsipfs = await IPFS.create({
+            repo: '/ipfs-' + Math.random(),
+            config: {
+              Addresses: {
+                Swarm: ['/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star/']
+              }
+            },
+            EXPERIMENTAL: {pubsub: true}
+          });
+          this.jsipfs.swarm.connect("/ip4/127.0.0.1/tcp/9999/ws/ipfs/QmPKtUgdw97QS7zYoEVxY9EpuCavbtMmjSMp7usDXt1BGi");
+
+          this.$store.commit('setIpfsNode', this.jsipfs);
+          setInterval(async()=>{
+            let peers = await this.jsipfs.swarm.peers();
+            this.ipfsSW = peers.length;
+          },2000)
+        }
       },
     },
     created() {
