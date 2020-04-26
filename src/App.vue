@@ -95,7 +95,7 @@
           }
           let vid = await dikTok.methods.videoNum().call().then((res)=>{return res});
           if(vid>0){
-              this.$router.push({path:'/video/'+vid})
+              this.$router.push({path:'/video/'+(+vid-1)})
           }
         }
 
@@ -147,22 +147,12 @@
         };
         console.log('login:'+this.loginEth);
         if(this.loginEth){
-          //创建一个ipfs节点
-          const IPFS = require('ipfs');
-          this.jsipfs = await IPFS.create({
-            repo: '/ipfs-' + Math.random(),
-            config: {
-              Addresses: {
-                Swarm: ['/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star/']
-              }
-            },
-            EXPERIMENTAL: {pubsub: true}
-          });
-          this.jsipfs.swarm.connect("/ip4/127.0.0.1/tcp/9999/ws/ipfs/QmPKtUgdw97QS7zYoEVxY9EpuCavbtMmjSMp7usDXt1BGi");
+          const ipfs = await this.$ipfs;
+          ipfs.swarm.connect("/ip4/127.0.0.1/tcp/9999/ws/ipfs/QmPKtUgdw97QS7zYoEVxY9EpuCavbtMmjSMp7usDXt1BGi");
+          // ipfs.swarm.connect("/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star");
 
-          this.$store.commit('setIpfsNode', this.jsipfs);
           setInterval(async()=>{
-            let peers = await this.jsipfs.swarm.peers();
+            let peers = await ipfs.swarm.peers();
             this.ipfsSW = peers.length;
           },2000)
         }

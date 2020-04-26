@@ -5,8 +5,10 @@ import store from './store'
 import filter from './filter'
 import './registerServiceWorker'
 import BootstrapVue from 'bootstrap-vue'
+import VueIpfs from './plugins/vue-ipfs';
 
 Vue.use(BootstrapVue);
+Vue.use(VueIpfs);
 
 Vue.config.productionTip = false
 import 'bootstrap/dist/css/bootstrap.css'
