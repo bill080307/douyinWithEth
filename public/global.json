@@ -9,11 +9,11 @@
   "extend": [
     {
       "title": "当前版本：测1试",
-      "link": "/ipfs/Qmxxxx"
+      "link": "/ipfs/Qmxxxx1"
     },
     {
       "title": "当前版本：测2试",
-      "link": "/ipfs/Qmxxxx"
+      "link": "/ipfs/Qmxxxx2"
     }
   ]
 }

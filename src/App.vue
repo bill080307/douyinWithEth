@@ -15,7 +15,7 @@
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item :href="global.dashboard">管理我的空间</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item :href="link.link" v-for="link in global.extend">{{ link.title }}</b-dropdown-item>
+              <b-dropdown-item :href="link.link" v-for="link in global.extend" :key="link.link">{{ link.title }}</b-dropdown-item>
               <b-dropdown-item :href="global.client.download">下载客户端</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
@@ -85,7 +85,7 @@
           //定义合约
           const dikTok = new web3js.eth.Contract(DikTok_Abi, config["network"][0]["contractAddress"]);
           this.$store.commit('setDikTok', dikTok);
-          console.log(dikTok);
+
           //检测是否登陆
           let account = await web3js.eth.getAccounts();
           if(account.length > 0) {
