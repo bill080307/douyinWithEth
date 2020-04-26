@@ -88,10 +88,14 @@
           console.log(dikTok);
           //检测是否登陆
           let account = await web3js.eth.getAccounts();
-          if(account.length > 0){
-            this.$store.commit('setUserAccount', account[0]);
-            this.loginEth = true;
-            this.$store.commit('setIsloginEth', true);
+          if(account.length > 0) {
+              this.$store.commit('setUserAccount', account[0]);
+              this.loginEth = true;
+              this.$store.commit('setIsloginEth', true);
+          }
+          let vid = await dikTok.methods.videoNum().call().then((res)=>{return res});
+          if(vid>0){
+              this.$router.push({path:'/video/'+vid})
           }
         }
 
@@ -141,6 +145,7 @@
             this.$store.commit('setGateWay', gateways[0]);
             localStorage.setItem('GateWays', JSON.stringify(gateways));
         };
+        console.log('login:'+this.loginEth);
         if(this.loginEth){
           //创建一个ipfs节点
           const IPFS = require('ipfs');
