@@ -45,7 +45,7 @@
     methods:{
       async init(){
         console.log(this.comment);
-        let userinfo = await Axios.get('/ipfs/'+this.user.userHash+'/user.json').then((res)=>{
+        let userinfo = await Axios.get('/ipfs/'+this.user.userHash).then((res)=>{
           return res.data
         });
         this.avatar = userinfo.avatar;

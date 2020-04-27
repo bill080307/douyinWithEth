@@ -37,7 +37,7 @@
     props:['user'],
     methods:{
       async init(){
-        let userinfo = await Axios.get('/ipfs/'+this.user.userHash+'/user.json').then((res)=>{
+        let userinfo = await Axios.get('/ipfs/'+this.user.userHash).then((res)=>{
           return res.data
         });
         this.avatar = userinfo.avatar;
@@ -46,8 +46,13 @@
       }
     },
     created() {
-      this.init()
+      // this.init()
     },
+    watch:{
+      user(val, oldval){
+        this.init();
+      }
+    }
   }
 </script>
 

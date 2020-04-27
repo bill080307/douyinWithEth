@@ -59,7 +59,7 @@
     props:['video'],
     methods:{
       async init(){
-        let videoinfo = await Axios.get('/ipfs/'+this.video.videoHash+'/files.json').then((res)=>{
+        let videoinfo = await Axios.get('/ipfs/'+this.video.videoHash).then((res)=>{
           return res.data
         });
         this.cover = videoinfo.cover;
@@ -105,13 +105,18 @@
       }
     },
     created() {
-      this.init()
+      // this.init()
     },
     filters: {
       formatRate(bit) {
         let kbit = bit * 8 / 1024;
         let mbit = kbit / 1024;
         return mbit.toFixed(2) + 'Mbps';
+      }
+    },
+    watch:{
+      video(val, oldval){
+        this.init();
       }
     }
   }
@@ -120,6 +125,10 @@
 <style scoped>
   .card-body{
     padding: 0.2rem;
+  }
+  #player{
+    max-width: 100%;
+    width: 100%;
   }
   .video-card{
     margin-left: -10px;

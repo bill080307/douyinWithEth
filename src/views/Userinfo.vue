@@ -23,11 +23,11 @@
           </b-col>
         </b-row>
         <b-row class="info">
-          <b-col sm="2"><label for="profile">简介</label></b-col>
+          <b-col sm="2"><label for="description">简介</label></b-col>
           <b-col sm="10">
             <b-input-group>
-              <b-form-textarea id="profile"
-                               v-model="userAccount.profile"
+              <b-form-textarea id="description"
+                               v-model="userAccount.description"
                                :rows="1"
                                :max-rows="6" v-on:blur="savetoipfs">
               </b-form-textarea>
@@ -53,7 +53,7 @@
           userHash:'',
           nickname:'',
           avatar: '',
-          profile:'',
+          description:'',
         },
         file:null,
         avatarselect:null,
@@ -69,37 +69,39 @@
         const dikTok = this.$store.state.dikTok;
         const user = await dikTok.methods.getUserInfo(this.userAccount.address).call();
         if(user.userHash === ''){
-          const ipfs = this.$store.state.ipfsNode;
-          const us = await ipfs.add(Buffer.from(JSON.stringify({avatar:'',nickname:'',profile:''})));
+          const ipfs = this.$ipfs;
+          const us = await ipfs.add(Buffer.from(JSON.stringify({avatar:'',nickname:'',description:''})));
           this.userAccount.userHash = us[0].hash;
         }else{
           this.userAccount.userHash = user.userHash;
-          const userjson = await Axios.get('/ipfs/'+this.this.userAccount.userHash).then((res)=>{
+          const userjson = await Axios.get('/ipfs/'+this.userAccount.userHash).then((res)=>{
             return res.data;
           });
           this.userAccount.avatar = userjson.avatar;
           this.userAccount.nickname = userjson.nickname;
-          this.userAccount.profile = userjson.profile;
+          this.userAccount.description = userjson.description;
         }
       },
       up_avatar(){
-        const ipfs = this.$store.state.ipfsNode;
         setTimeout(async()=>{
           if(this.avatarselect){
-            let file = await ipfs.add(this.avatarselect);
-            this.userAccount.avatar = '/ipfs/'+file[0].hash;
-            this.savetoipfs();
+            const ipfs = await this.$ipfs;
+            for await (const file of ipfs.add(this.avatarselect)) {
+              this.userAccount.avatar = '/ipfs/'+file.path;
+              this.savetoipfs();
+            }
           }
         },50);
       },
       async savetoipfs(){
-        const ipfs = this.$store.state.ipfsNode;
-        const us = await ipfs.add(Buffer.from(JSON.stringify({
-          avatar: this.userAccount.avatar,
-          nickname: this.userAccount.nickname,
-          profile: this.userAccount.profile
-        })));
-        this.userAccount.userHash = us[0].hash;
+        const ipfs = await this.$ipfs;
+        for await (const result of ipfs.add(JSON.stringify({
+            avatar: this.userAccount.avatar,
+            nickname: this.userAccount.nickname,
+            description: this.userAccount.description
+        }))) {
+          this.userAccount.userHash = result.path;
+        }
       },
       async save(){
         console.log(this.userAccount.userHash);
