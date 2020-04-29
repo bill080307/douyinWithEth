@@ -49,20 +49,26 @@
     methods:{
       async init(){
         this.videoId = this.$route.params.id;
-        const dikTok = this.$store.state.dikTok;
-        this.videoData = await dikTok.methods.getVideo(this.videoId).call().then((res)=>{return res});
-        this.videoData['videoID'] = this.videoId;
-
-        this.userData = await dikTok.methods.getUserInfo(this.videoData.author).call().then((res)=>{return res});
-        this.userData['userAddress'] = this.videoData.author;
-
-        for (let i = 0; i < this.videoData.commentsNum && i < 6; i++) {
-          const comment = await dikTok.methods.getVideoComment(this.videoId, i).call().then((res)=>{return res});
-          this.CommentData.append({"author":this.videoData.author}.concat(comment))
-        }
-
-        console.log(this.userData);
+        const wait = setInterval(()=>{
+            if(this.$store.state.dikTok!=null){
+                window.clearInterval(wait);
+                this.initplayer();
+            }
+        },1000)
       },
+      async initplayer(){
+          const dikTok = this.$store.state.dikTok;
+          this.videoData = await dikTok.methods.getVideo(this.videoId).call().then((res)=>{return res});
+          this.videoData['videoID'] = this.videoId;
+
+          this.userData = await dikTok.methods.getUserInfo(this.videoData.author).call().then((res)=>{return res});
+          this.userData['userAddress'] = this.videoData.author;
+
+          for (let i = 0; i < this.videoData.commentsNum && i < 6; i++) {
+              const comment = await dikTok.methods.getVideoComment(this.videoId, i).call().then((res)=>{return res});
+              this.CommentData.append({"author":this.videoData.author}.concat(comment))
+          }
+      }
     },
     created() {
       this.init()

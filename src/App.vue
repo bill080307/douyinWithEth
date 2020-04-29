@@ -93,9 +93,11 @@
               this.loginEth = true;
               this.$store.commit('setIsloginEth', true);
           }
-          let vid = await dikTok.methods.videoNum().call().then((res)=>{return res});
-          if(vid>0){
-              this.$router.push({path:'/video/'+(+vid-1)})
+          if(this.$route.path==='/'){
+              let vid = await dikTok.methods.videoNum().call().then((res)=>{return res});
+              if(vid>0){
+                  this.$router.push({path:'/video/'+(+vid-1)})
+              }
           }
         }
 
