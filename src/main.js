@@ -8,6 +8,15 @@ import BootstrapVue from 'bootstrap-vue'
 import VueIpfs from './plugins/vue-ipfs';
 
 Vue.use(BootstrapVue);
+VueIpfs.install(Vue,{
+  repo: '/ipfs-' + Math.random(),
+  config: {
+    Addresses: {
+      Swarm: ['/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star/']
+    }
+  },
+  EXPERIMENTAL: {pubsub: true}
+})
 Vue.use(VueIpfs);
 
 Vue.config.productionTip = false

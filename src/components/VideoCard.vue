@@ -36,7 +36,7 @@
     props:['video'],
     methods:{
       async init(){
-        let videoinfo = await Axios.get('/ipfs/'+this.video.videoHash+'/files.json').then((res)=>{
+        let videoinfo = await Axios.get('/ipfs/'+this.video.videoHash).then((res)=>{
           return res.data
         });
         this.cover = videoinfo.cover;
