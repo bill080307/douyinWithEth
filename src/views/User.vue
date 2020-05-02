@@ -39,9 +39,11 @@
         const dikTok = this.$store.state.dikTok;
         this.userData = await dikTok.methods.getUserInfo(this.userAddress).call().then((res)=>{return res});
         this.userData['userAddress'] = this.userAddress;
+        this.videoData = [];
         for (let i = 0; i < this.userData.userVideoNums && i < 6; i++) {
           const video = await dikTok.methods.getUserVideo(this.userAddress, i).call().then((res)=>{return res});
-          this.videoData.append({"author":this.userAddress}.concat(video))
+          video['author'] = this.userAddress;
+          this.videoData.push(video);
         }
       }
     },

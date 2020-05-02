@@ -1,6 +1,6 @@
 <template>
   <b-card no-body class="overflow-hidden user-card" >
-    <a :href="'/user/'+user.userAddress">
+    <a :href="'#/user/'+user.userAddress">
       <b-row no-gutters>
         <b-col md="3">
           <b-card-img :src="avatar" class="rounded-0"/>

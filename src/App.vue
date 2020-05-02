@@ -4,7 +4,7 @@
       <b-navbar type="dark">
         <b-container>
           <b-navbar-nav>
-            <b-nav-item href="#">主站</b-nav-item>
+            <b-nav-item href="/ipns/QmUnZTQFJCd573goUHECvkG63UdAW9CTgZAMvp8EkGnMmJ/">主站</b-nav-item>
             <b-nav-item to="/">短视频</b-nav-item>
             <b-nav-item href="#">直播</b-nav-item>
           </b-navbar-nav>
