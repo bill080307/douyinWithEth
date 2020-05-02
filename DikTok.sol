@@ -177,7 +177,7 @@ contract DikTok {
     }
 
     function reward (uint _videoId) public payable {
-        require(videos[_videoId].permission != 0);
+        require(videos[_videoId].permission == 0);
         videos[_videoId].author.transfer(msg.value);
         videos[_videoId].gratuitys[videos[_videoId].gratuityNum++] = Gratuity(msg.value, msg.sender);
     }
