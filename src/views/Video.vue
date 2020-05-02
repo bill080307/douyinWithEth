@@ -7,7 +7,7 @@
       <b-col cols="3">
         <UserCard :user="userData"></UserCard>
         <CommentCard :comment="comment" :user="userData" v-for="comment in CommentData"></CommentCard>
-        <FunctionCard></FunctionCard>
+        <FunctionCard :videoid="videoId"></FunctionCard>
       </b-col>
     </b-row>
     <b-row>
@@ -102,6 +102,7 @@
         this.videolist = [];
         for (let i = start; i <= end; i++) {
           const v = await dikTok.methods.getVideo(i).call().then((res)=>{return res});
+          v['videoId'] = i;
           this.videolist.push(v);
         }
       }

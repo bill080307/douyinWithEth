@@ -6,7 +6,7 @@
 
     <b-badge variant="dark" class="duration">{{ duration }}</b-badge>
 <!--    <b-badge variant="primary" class="hd">{{ hd }}</b-badge>-->
-    <a :href="'/video/'+video.videoID">
+    <a :href="'#/video/'+video.videoId">
       <b-card-body>
         <b-card-title>{{ title }}</b-card-title>
         <b-card-text>
