@@ -6,7 +6,7 @@
       </b-col>
       <b-col cols="3">
         <UserCard :user="userData"></UserCard>
-        <CommentCard :comment="comment" :user="userData" v-for="comment in CommentData"></CommentCard>
+        <CommentCard :comment="comment" v-for="comment in CommentData" :key="comment.userHash"></CommentCard>
         <FunctionCard :videoid="videoId"></FunctionCard>
       </b-col>
     </b-row>
@@ -78,7 +78,7 @@
 
           for (let i = 0; i < this.videoData.commentsNum && i < 6; i++) {
               const comment = await dikTok.methods.getVideoComment(this.videoId, i).call().then((res)=>{return res});
-              this.CommentData.append({"author":this.videoData.author}.concat(comment))
+              this.CommentData.push(comment);
           }
       },
       getNum(pageNum){

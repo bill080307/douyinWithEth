@@ -39,22 +39,28 @@
         commentinfo: '',
         timestamp: 0,
         videotimestamp: 0,
+        user: {},
       }
     },
-    props:['comment','user'],
+    props:['comment'],
     methods:{
       async init(){
         console.log(this.comment);
-        let userinfo = await Axios.get('/ipfs/'+this.user.userHash).then((res)=>{
-          return res.data
-        });
-        this.avatar = userinfo.avatar;
-        this.username = userinfo.username;
         await Axios.get('/ipfs/'+this.comment.contentHash).then((res)=>{
           this.commentinfo = res.data
         });
         this.timestamp = formatDate(this.comment.timestamp, 'short');
         this.videotimestamp = formatdurationtime(this.comment.videotimestamp,'millisecond');
+        const dikTok = this.$store.state.dikTok;
+        await dikTok.methods.getUserInfo(this.user.author).call().then((res)=>{
+            this.user = res
+        });
+          console.log(this.user);
+        let userinfo = await Axios.get('/ipfs/'+this.user.userHash).then((res)=>{
+            return res.data
+        });
+        this.avatar = userinfo.avatar;
+        this.username = userinfo.username;
       }
     },
     created() {

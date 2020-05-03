@@ -24,7 +24,7 @@
 
 <script>
   import Axios from 'axios'
-
+  import {formatETH} from "../utils/assist";
   export default {
     name: "UserCard",
     data(){
@@ -43,6 +43,7 @@
         this.avatar = userinfo.avatar;
         this.username = userinfo.username;
         this.description = userinfo.description;
+        this.user.userGratuitySum = formatETH(this.user.userGratuitySum);
       }
     },
     created() {
