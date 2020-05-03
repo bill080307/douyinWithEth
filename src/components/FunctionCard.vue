@@ -1,9 +1,9 @@
 <template>
   <b-card class="fun-card">
     <b-input-group>
-      <b-form-input placeholder="弹幕/评论"></b-form-input>
+      <b-form-input placeholder="弹幕/评论" v-model="comment"></b-form-input>
       <b-input-group-append>
-        <b-button variant="info">发送</b-button>
+        <b-button variant="info" @click="makeComment">发送</b-button>
       </b-input-group-append>
     </b-input-group>
     <br>
@@ -26,6 +26,7 @@
       data(){
           return {
               gratuity: 0,
+              comment:'',
           }
       },
       props:['videoid'],
@@ -56,6 +57,24 @@
                   }).on("error", function(error) {
                   console.log(error);
               });
+          },
+          async makeComment(){
+              const ipfs = await this.$ipfs;
+              let hash = '';
+              for await (const result of ipfs.add(this.comment)) {
+                  hash = result.path;
+              }
+              const dikTok = this.$store.state.dikTok;
+              dikTok.methods.makeComment(this.videoid, 0, hash)
+                  .send({ from: this.$store.state.userAccount })
+                  .on("receipt", function(receipt) {
+                      //返回成功上链的信息
+                      alert("上链成功，区块高度："+receipt.blockNumber);
+                      console.log(receipt);
+                  }).on("error", function(error) {
+                  console.log(error);
+              });
+
           }
       },
       created() {
