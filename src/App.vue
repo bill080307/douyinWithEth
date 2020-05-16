@@ -134,52 +134,52 @@
             this.$router.push({path:'/demo'})
         }
 
-        //先get一下我下载下来的公共网关列表
-        // let gateways = await Axios.get('./gateways.json').then((res)=>{
-        //   return res.data;
-        // });
-        // let olgateways = await Axios.get('https://ipfs.github.io/public-gateway-checker/gateways.json').then((res)=>{
-        //   return res.data;
-        // });
-        // const host1 = window.location.host;
-        // const host2 = document.domain;
-        // gateways = [
-        //   "http://127.0.0.1:8080/ipfs/:hash",
-        //   "http://" + host1 + "/ipfs/:hash",
-        //   "http://" + host2 + ":8080/ipfs/:hash"
-        // ].concat(gateways);
-        // gateways = gateways.concat(olgateways);
-        // gateways = uniqueArr(gateways);
-        //
-        // // 定义用于测试的hash和文本
-        // const hashToTest = 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a';
-        // const hashString = 'Hello from IPFS Gateway Checker';
-        // let gatewayOnline = [];
-        // let num = gateways.length;
-        // gateways.forEach((value) => {
-        //   //拼接hash到网关url里
-        //   const gatewayAndHash = value.replace(':hash', hashToTest);
-        //   try {
-        //     Axios.get(gatewayAndHash, {timeout: 5000}).then((res) => {
-        //       if (res.data.trim() === hashString.trim()) {
-        //         gatewayOnline.push(value);
-        //       }
-        //       num --;
-        //       if(num === 0)saveGateway(gatewayOnline);
-        //     }).catch((err) => {
-        //       num --;
-        //       if(num === 0)saveGateway(gatewayOnline);
-        //     });
-        //   }catch (e) {
-        //     num --;
-        //     if(num === 0)saveGateway(gatewayOnline);
-        //   }
-        // });
-        // const saveGateway = (gateways)=>{
-        //     if(gateways.length < 1)return;
-        //     this.$store.commit('setGateWay', gateways[0]);
-        //     localStorage.setItem('GateWays', JSON.stringify(gateways));
-        // };
+        先get一下我下载下来的公共网关列表
+        let gateways = await Axios.get('./gateways.json').then((res)=>{
+          return res.data;
+        });
+        let olgateways = await Axios.get('https://ipfs.github.io/public-gateway-checker/gateways.json').then((res)=>{
+          return res.data;
+        });
+        const host1 = window.location.host;
+        const host2 = document.domain;
+        gateways = [
+          "http://127.0.0.1:8080/ipfs/:hash",
+          "http://" + host1 + "/ipfs/:hash",
+          "http://" + host2 + ":8080/ipfs/:hash"
+        ].concat(gateways);
+        gateways = gateways.concat(olgateways);
+        gateways = uniqueArr(gateways);
+
+        // 定义用于测试的hash和文本
+        const hashToTest = 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a';
+        const hashString = 'Hello from IPFS Gateway Checker';
+        let gatewayOnline = [];
+        let num = gateways.length;
+        gateways.forEach((value) => {
+          //拼接hash到网关url里
+          const gatewayAndHash = value.replace(':hash', hashToTest);
+          try {
+            Axios.get(gatewayAndHash, {timeout: 5000}).then((res) => {
+              if (res.data.trim() === hashString.trim()) {
+                gatewayOnline.push(value);
+              }
+              num --;
+              if(num === 0)saveGateway(gatewayOnline);
+            }).catch((err) => {
+              num --;
+              if(num === 0)saveGateway(gatewayOnline);
+            });
+          }catch (e) {
+            num --;
+            if(num === 0)saveGateway(gatewayOnline);
+          }
+        });
+        const saveGateway = (gateways)=>{
+            if(gateways.length < 1)return;
+            this.$store.commit('setGateWay', gateways[0]);
+            localStorage.setItem('GateWays', JSON.stringify(gateways));
+        };
         console.log('login:'+this.loginEth);
         if(this.loginEth){
           const ipfs = await this.$ipfs;
