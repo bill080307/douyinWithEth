@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Demo from './views/Demo.vue'
 import Video from "./views/Video";
 import User from "./views/User";
 import Userinfo from "./views/Userinfo";
@@ -31,6 +31,11 @@ export default new Router({
       path: '/upload',
       name: 'upload',
       component: Upload
+    },
+    {
+      path: '/demo',
+      name: 'demo',
+      component: Demo
     },
     {
       path: '/about',

@@ -7,13 +7,12 @@
             <b-nav-item href="/ipns/QmUnZTQFJCd573goUHECvkG63UdAW9CTgZAMvp8EkGnMmJ/">主站</b-nav-item>
             <b-nav-item to="/">短视频</b-nav-item>
             <b-nav-item href="#">直播</b-nav-item>
+<!--            <b-nav-item href="#">{{ ipfsSW }}</b-nav-item>-->
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
               <template slot="button-content">更多</template>
               <b-dropdown-item :href="global.news">公告</b-dropdown-item>
-              <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item :href="global.dashboard">管理我的空间</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item :href="link.link" v-for="link in global.extend" :key="link.link">{{ link.title }}</b-dropdown-item>
               <b-dropdown-item :href="global.client.download">下载客户端</b-dropdown-item>
@@ -26,11 +25,31 @@
       <h1 v-if="!connectEth">未连接 ETH</h1>
       <router-view></router-view>
     </b-container>
+    <div class="footer">
+      <b-container>
+        <b-row>
+          <b-col sm="12" md="6">
+            <b-row>
+              <b-col cols="4" v-for="l in global.links" :key="l.link"><a :href="l.link" >{{ l.title }}</a></b-col>
+            </b-row>
+          </b-col>
+          <b-col sm="6" md="2">
+            <b-row>
+              <div id="qrCodeipns" ref="qrCodeDivipns" class="qr"></div>
+            </b-row>
+          </b-col>
+          <b-col sm="6" md="4">
+            <a class="f_logo" :href="'/ipns/'+global.id+'/'"></a>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </div>
 </template>
 <script>
   import Axios from 'axios';
   import Web3 from "web3";
+  import QRCode from 'qrcodejs2';
   import Ipfs from 'ipfs';
   import {addressab, uniqueArr} from "./utils/assist";
   export default {
@@ -39,7 +58,6 @@
       return {
         global:{
           id: "",
-          dashboard: "",
           client: {
             download: ""
           },
@@ -55,6 +73,15 @@
       async init(){
         Axios.get('./global.json').then((res)=>{
           this.global = res.data;
+            new QRCode(this.$refs.qrCodeDivipns, {
+                text: '/ipns/'+res.data.id+'/',
+                width: 120,
+                height: 120,
+                colorDark: "#333333",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.L
+            });
+            console.log(res.data.id)
         }).catch((err)=>{
           console.log(err)
         });
@@ -99,6 +126,8 @@
                   this.$router.push({path:'/video/'+(+vid-1)})
               }
           }
+        }else{
+            this.$router.push({path:'/demo'})
         }
 
         //先get一下我下载下来的公共网关列表
@@ -174,12 +203,16 @@
   .header .navbar{
     background-color: rgba(0, 0, 0, 0.6) ;
   }
-
   .footer{
     margin-top: 40px;
     padding-top: 40px;
     padding-bottom: 40px;
     background-color: #f6f9fa;
   }
-
+  .f_logo{
+    display: inline-block;
+    width: 300px;
+    height: 100px;
+    background: url("/ipfs/QmSiGaJ6phBKWuDmYpEocLgZgmwfGnDP9wuHww4Skxkcfq");
+  }
 </style>
