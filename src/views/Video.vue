@@ -14,7 +14,7 @@
       <b-pagination-nav :link-gen="getNum" @change="gotoplayer" :number-of-pages="MaxPage" use-router></b-pagination-nav>
     </b-row>
     <b-row>
-      <b-col cols="3" v-for="v in videolist" :key="v.videoHash">
+      <b-col sm="6" md="4" lg="3" xl="2" v-for="v in videolist" :key="v.videoHash">
         <VideoCard :video="v"></VideoCard>
       </b-col>
     </b-row>
@@ -76,6 +76,7 @@
           this.userData = await dikTok.methods.getUserInfo(this.videoData.author).call().then((res)=>{return res});
           this.userData['userAddress'] = this.videoData.author;
 
+          this.CommentData = [];
           for (let i = 0; i < this.videoData.commentsNum && i < 6; i++) {
               const comment = await dikTok.methods.getVideoComment(this.videoId, i).call().then((res)=>{return res});
               this.CommentData.push(comment);

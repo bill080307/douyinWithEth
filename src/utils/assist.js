@@ -51,7 +51,7 @@ export function formatdurationtime(inputTime, format = 'standard') {
 }
 
 export function formatETH(eth) {
-  return Math.floor(eth / 1e+8).toFixed(2);
+  return (eth / 1e+18).toFixed(2);
 }
 export function uniqueArr(array) {
   let n = [];

@@ -8,9 +8,10 @@
 <!--    <b-badge variant="primary" class="hd">{{ hd }}</b-badge>-->
     <a :href="'#/video/'+video.videoId">
       <b-card-body>
-        <b-card-title>{{ title }}</b-card-title>
+        <b-card-title><h4>{{ title }}</h4></b-card-title>
         <b-card-text>
-          {{ timestamp }} 👍: {{ gratuityNum }} 🎁: {{ gratuitySum }}
+          {{ timestamp }} <br>
+          👍: {{ gratuityNum }} 🎁: {{ gratuitySum }}
         </b-card-text>
       </b-card-body>
     </a>
@@ -36,13 +37,16 @@
     props:['video'],
     methods:{
       async init(){
+        if(this.video.videoHash.substr(0,6)==='/ipfs/'){
+          this.video.videoHash = this.video.videoHash.substr(6);
+        }
         let videoinfo = await Axios.get('/ipfs/'+this.video.videoHash).then((res)=>{
           return res.data
         });
         this.cover = videoinfo.cover;
         this.title = videoinfo.title;
         this.duration = formatdurationtime(this.video.duration);
-        this.timestamp = formatDate(this.video.timestamp,'short');
+        this.timestamp = formatDate(this.video.timestamp);
         this.gratuityNum = this.video.gratuityNum;
         this.gratuitySum = formatETH(this.video.gratuitySum);
       }
@@ -55,7 +59,7 @@
 
 <style scoped>
   .card-body{
-    padding: 0.2rem;
+    padding: 0.1rem;
   }
   .duration{
     position: absolute;
@@ -70,8 +74,15 @@
     text-decoration: none;
   }
   .video-card{
-    margin-left: -10px;
-    margin-right: -10px;
+    margin-left: -13px;
+    margin-right: -13px;
     margin-bottom: 10px;
+  }
+  h4{
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0;
   }
 </style>

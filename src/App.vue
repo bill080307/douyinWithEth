@@ -12,6 +12,9 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
               <template slot="button-content">更多</template>
+              <b-dropdown-item v-if="loginEth" to="/userinfo">个人信息</b-dropdown-item>
+              <b-dropdown-item v-if="loginEth" :to="'/user/'+$store.state.userAccount">我的空间</b-dropdown-item>
+              <b-dropdown-item v-if="loginEth" to="/upload">上传视频</b-dropdown-item>
               <b-dropdown-item :href="global.news">公告</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item :href="link.link" v-for="link in global.extend" :key="link.link">{{ link.title }}</b-dropdown-item>
@@ -22,7 +25,9 @@
       </b-navbar>
     </div>
     <b-container>
-      <h1 v-if="!connectEth">未连接 ETH</h1>
+      <h1 v-if="!connectEth">未连接 ETH, 请下载浏览器插件🦊MetaMask，
+        并切换到<b-badge variant="danger">Ropsten测试网络</b-badge>，
+        访问<b-badge target="_blank" href="https://faucet.metamask.io" variant="light">水龙头</b-badge>以获取测试用的以太币。</h1>
       <router-view></router-view>
     </b-container>
     <div class="footer">
@@ -81,7 +86,6 @@
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.L
             });
-            console.log(res.data.id)
         }).catch((err)=>{
           console.log(err)
         });
@@ -131,51 +135,51 @@
         }
 
         //先get一下我下载下来的公共网关列表
-        let gateways = await Axios.get('./gateways.json').then((res)=>{
-          return res.data;
-        });
-        let olgateways = await Axios.get('https://ipfs.github.io/public-gateway-checker/gateways.json').then((res)=>{
-          return res.data;
-        });
-        const host1 = window.location.host;
-        const host2 = document.domain;
-        gateways = [
-          "http://127.0.0.1:8080/ipfs/:hash",
-          "http://" + host1 + "/ipfs/:hash",
-          "http://" + host2 + ":8080/ipfs/:hash"
-        ].concat(gateways);
-        gateways = gateways.concat(olgateways);
-        gateways = uniqueArr(gateways);
-
-        //定义用于测试的hash和文本
-        const hashToTest = 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a';
-        const hashString = 'Hello from IPFS Gateway Checker';
-        let gatewayOnline = [];
-        let num = gateways.length;
-        gateways.forEach((value) => {
-          //拼接hash到网关url里
-          const gatewayAndHash = value.replace(':hash', hashToTest);
-          try {
-            Axios.get(gatewayAndHash, {timeout: 5000}).then((res) => {
-              if (res.data.trim() === hashString.trim()) {
-                gatewayOnline.push(value);
-              }
-              num --;
-              if(num === 0)saveGateway(gatewayOnline);
-            }).catch((err) => {
-              num --;
-              if(num === 0)saveGateway(gatewayOnline);
-            });
-          }catch (e) {
-            num --;
-            if(num === 0)saveGateway(gatewayOnline);
-          }
-        });
-        const saveGateway = (gateways)=>{
-            if(gateways.length < 1)return;
-            this.$store.commit('setGateWay', gateways[0]);
-            localStorage.setItem('GateWays', JSON.stringify(gateways));
-        };
+        // let gateways = await Axios.get('./gateways.json').then((res)=>{
+        //   return res.data;
+        // });
+        // let olgateways = await Axios.get('https://ipfs.github.io/public-gateway-checker/gateways.json').then((res)=>{
+        //   return res.data;
+        // });
+        // const host1 = window.location.host;
+        // const host2 = document.domain;
+        // gateways = [
+        //   "http://127.0.0.1:8080/ipfs/:hash",
+        //   "http://" + host1 + "/ipfs/:hash",
+        //   "http://" + host2 + ":8080/ipfs/:hash"
+        // ].concat(gateways);
+        // gateways = gateways.concat(olgateways);
+        // gateways = uniqueArr(gateways);
+        //
+        // // 定义用于测试的hash和文本
+        // const hashToTest = 'Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a';
+        // const hashString = 'Hello from IPFS Gateway Checker';
+        // let gatewayOnline = [];
+        // let num = gateways.length;
+        // gateways.forEach((value) => {
+        //   //拼接hash到网关url里
+        //   const gatewayAndHash = value.replace(':hash', hashToTest);
+        //   try {
+        //     Axios.get(gatewayAndHash, {timeout: 5000}).then((res) => {
+        //       if (res.data.trim() === hashString.trim()) {
+        //         gatewayOnline.push(value);
+        //       }
+        //       num --;
+        //       if(num === 0)saveGateway(gatewayOnline);
+        //     }).catch((err) => {
+        //       num --;
+        //       if(num === 0)saveGateway(gatewayOnline);
+        //     });
+        //   }catch (e) {
+        //     num --;
+        //     if(num === 0)saveGateway(gatewayOnline);
+        //   }
+        // });
+        // const saveGateway = (gateways)=>{
+        //     if(gateways.length < 1)return;
+        //     this.$store.commit('setGateWay', gateways[0]);
+        //     localStorage.setItem('GateWays', JSON.stringify(gateways));
+        // };
         console.log('login:'+this.loginEth);
         if(this.loginEth){
           const ipfs = await this.$ipfs;

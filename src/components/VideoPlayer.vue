@@ -59,6 +59,9 @@
     props:['video'],
     methods:{
       async init(){
+        if(this.video.videoHash.substr(0,6)==='/ipfs/'){
+            this.video.videoHash = this.video.videoHash.substr(6);
+        }
         let videoinfo = await Axios.get('/ipfs/'+this.video.videoHash).then((res)=>{
           return res.data
         });

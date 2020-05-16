@@ -60,8 +60,14 @@
         methods: {
             async init() {
                 let video = await Axios.get('./demo.json');
-                console.log(video);
-                this.demoVideos = video.data.demoVideos;
+                let demoVideos = video.data.demoVideos;
+                for(let i=0;i<12;i++){
+                    let len = demoVideos.length-1;
+                    let number = Math.floor(Math.random()*len);
+                    this.demoVideos.push(demoVideos[number]);
+                    demoVideos.splice(number,1);
+                }
+                this.playvideo(this.demoVideos[0]);
             },
             playvideo(v){
                 this.video = v;
@@ -69,13 +75,18 @@
                     type:"video/mp4",
                     src:v.url
                 }];
+                const playvideo = this.playvideo;
+                const demoVideos = this.demoVideos;
                 const player = videojs('demoplayer');
                 player.ready(function(){
                     const obj  = this;
                     obj.src(sources);
                     obj.load();
+                    obj.on('ended', ()=>{
+                        let number = Math.floor(Math.random()*12);
+                        playvideo(demoVideos[number]);
+                    });
                 });
-                console.log(v);
             }
         },
         filters: {
@@ -112,7 +123,6 @@
     text-overflow:ellipsis;
     white-space: nowrap;
     margin-bottom: 0;
-
   }
   .duration{
     position: absolute;

@@ -8,7 +8,7 @@ DikTok is a Dapp (Ethereum & IPFS).
 
 以吸引用户、引导用户登录ETH网络
 
-体验hash： [/ipfs/QmPAJis8U7Da2f15cUypJm4DQsqvvNKRgFuoEzqF49kMY4/](http://ipfs-gateway.dlimba.top:8082/ipfs/QmPAJis8U7Da2f15cUypJm4DQsqvvNKRgFuoEzqF49kMY4/)
+体验hash： [/ipns/QmeHccaAitY3h6QUyf4VrgKziAdSpwrDuu7ETyxrpax1oZ/](http://ipfs-gateway.dlimba.top:8082/ipns/QmeHccaAitY3h6QUyf4VrgKziAdSpwrDuu7ETyxrpax1oZ/)
 
 ![未登录时的演示](demo-file/demo1.jpg)
 

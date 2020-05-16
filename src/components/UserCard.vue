@@ -37,6 +37,9 @@
     props:['user'],
     methods:{
       async init(){
+        if(this.user.userHash.length<1){
+            return ;
+        }
         let userinfo = await Axios.get('/ipfs/'+this.user.userHash).then((res)=>{
           return res.data
         });

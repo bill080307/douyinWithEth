@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col cols="3" v-for="video in videoData">
+      <b-col cols="3" v-for="video in videoData" :key="video.url">
         <VideoCard :video="video"></VideoCard>
       </b-col>
     </b-row>
