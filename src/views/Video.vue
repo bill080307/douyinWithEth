@@ -2,7 +2,7 @@
   <div>
     <b-row>
       <b-col cols="9">
-        <VideoPlayer :video="videoData"></VideoPlayer>
+        <VideoPlayer :video="videoData" v-on:playend="playend"></VideoPlayer>
       </b-col>
       <b-col cols="3">
         <UserCard :user="userData"></UserCard>
@@ -86,13 +86,10 @@
         return '/video/'+(pageNum-1)*10
       },
       async initvideolist(){
-          console.log('initvideolist');
           const dikTok = this.$store.state.dikTok;
           let vid = await dikTok.methods.videoNum().call().then((res)=>{return res});
-          console.log(vid);
           this.MaxVideo = vid;
           this.MaxPage = Math.ceil(vid/10);
-          console.log(this.MaxPage);
           await this.gotoplayer(this.MaxPage);
       },
       async gotoplayer(pageNum){
@@ -106,11 +103,15 @@
           v['videoId'] = i;
           this.videolist.push(v);
         }
-      }
+      },
+        playend(){
+          if(this.videoId>0){
+              this.$router.push({path:'/video/'+(+this.videoId-1)})
+          }
+        }
     },
     created() {
       const initvl = setInterval(()=>{
-          console.log(this.$store.state.dikTok);
           if(this.$store.state.dikTok!=null){
               this.initvideolist();
               clearInterval(initvl);

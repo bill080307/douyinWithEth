@@ -44,7 +44,7 @@
           return res.data
         });
         this.avatar = userinfo.avatar;
-        this.username = userinfo.username;
+        this.username = userinfo.username ? userinfo.username : userinfo.nickname;
         this.description = userinfo.description;
         this.user.userGratuitySum = formatETH(this.user.userGratuitySum);
       }

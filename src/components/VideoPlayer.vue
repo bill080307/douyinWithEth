@@ -69,6 +69,7 @@
         this.title = videoinfo.title;
         this.description = videoinfo.description;
         this.filelist = videoinfo.files;
+        this.selectlist = [];
         for (let i = 0; i < this.filelist.length; i++) {
           this.selectlist.push({
             value: i,
@@ -89,11 +90,15 @@
           type:"video/mp4",
           src:item.url
         }];
+        const tvue = this;
         const player = videojs('player');
         player.ready(function(){
           const obj  = this;
           obj.src(sources);
           obj.load();
+          obj.on('ended', ()=>{
+              tvue.$emit('playend');
+          });
         });
         const info = item.mediainfo.format;
         this.fileinfo.rate = info.size / info.duration;

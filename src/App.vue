@@ -183,8 +183,8 @@
         console.log('login:'+this.loginEth);
         if(this.loginEth){
           const ipfs = await this.$ipfs;
-          ipfs.swarm.connect("/ip4/127.0.0.1/tcp/9999/ws/ipfs/QmPKtUgdw97QS7zYoEVxY9EpuCavbtMmjSMp7usDXt1BGi");
-          // ipfs.swarm.connect("/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star");
+          // ipfs.swarm.connect("/ip4/127.0.0.1/tcp/9999/ws/ipfs/QmPKtUgdw97QS7zYoEVxY9EpuCavbtMmjSMp7usDXt1BGi");
+          ipfs.swarm.connect("/dns4/ipfs-gateway.dlimba.top/tcp/9999/ws/p2p/QmWxACeyRtqCZwix8LzFwHhvkRqVpQ1cEWPN86xa7Y6moi");
 
           setInterval(async()=>{
             let peers = await ipfs.swarm.peers();
